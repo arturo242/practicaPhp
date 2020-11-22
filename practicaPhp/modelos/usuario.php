@@ -19,11 +19,11 @@
          * @param password La contraseña del usuario
          * @return True si existe un usuario con ese nombre y contraseña, false en caso contrario
          */
-        public function buscarUsuario($usuario,$password) {
+        public function buscarUsuario($email,$password) {
 
-            $usuario = $this->db->consulta("SELECT idUsuario, nombre, fotografia FROM usuarios WHERE nombre = '$usuario' AND password = '$password'");
-            if ($usuario) {
-                return $usuario;
+            $email = $this->db->consulta("SELECT idUsuario, email, imagen FROM usuarios WHERE email = '$email' AND password = '$password'");
+            if ($email) {
+                return $email;
             } else {
                 return null;
             }
@@ -45,8 +45,8 @@
         public function delete() {
         }
 
-        public function existeNombre($nombreUsuario) {
-            $result = $this->db->consulta("SELECT * FROM usuarios WHERE nombre = '$nombreUsuario'");
+        public function existeNombre($email) {
+            $result = $this->db->consulta("SELECT * FROM usuarios WHERE email = '$email'");
             if ($result != null)
                 return 1;
             else  

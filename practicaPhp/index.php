@@ -11,7 +11,7 @@
 	if (isset($_REQUEST["action"])) {
 		$action = $_REQUEST["action"];
 	} else {
-		$action = "mostrar";
+		$action = "mostrarFormularioLogin";
 	}
 
 	
