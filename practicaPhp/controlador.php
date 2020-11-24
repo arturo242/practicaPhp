@@ -34,6 +34,7 @@ class Controlador{
 	{
 		$email = $_REQUEST["email"];
 		$password = $_REQUEST["pass"];
+		//$nombre = $this->seguridad->get("nombre");
 
 		$usuario = $this->usuario->buscarUsuario($email, $password);
 		
@@ -56,5 +57,34 @@ class Controlador{
 		$data['msjInfo'] = "Sesión cerrada correctamente";
 		$this->vista->mostrar("usuario/formularioLogin", $data);
 	}
+	public function comprobarEmail() {
+		$email = $_REQUEST["email"];
+		$result = $this->usuario->existeNombre($email);
+		echo $result;
+	}
+	public function mostrarFormularioRegistro()
+	{
+		$this->vista->mostrar("usuario/formularioRegistro");
+	}
+	public function insertarUsuario()
+	{
+		$nombre = $_REQUEST["nombre"];
+		$pass = $_REQUEST["pass"];
+		$email = $_REQUEST["email"];
 
+
+
+		$result = $this->usuario->buscarUsuario($email,$pass,$nombre);
+
+		if ($result) {
+			// De momento, dejamos aquí este echo. Ya lo quitaremos
+			$data['msjError'] = "Nombre de usuario o email en uso.";
+			$this->vista->mostrar("usuario/formularioRegistro", $data);
+		} else {
+			$this->usuario->insert($nombre,$pass,$email);
+			$data['msjInfo'] = "Registrado correctamente, por favor, inicie sesión.";
+			$this->vista->mostrar("usuario/formularioLogin",$data);
+		}
+		
+	}
 }

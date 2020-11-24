@@ -20,8 +20,7 @@
          * @return True si existe un usuario con ese nombre y contraseña, false en caso contrario
          */
         public function buscarUsuario($email,$password) {
-
-            $email = $this->db->consulta("SELECT idUsuario, email, imagen FROM usuarios WHERE email = '$email' AND password = '$password'");
+            $email = $this->db->consulta("SELECT idUsuario, email, nombre FROM usuarios WHERE email = '$email' AND pass = '$password'");
             if ($email) {
                 return $email;
             } else {
