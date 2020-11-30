@@ -1,0 +1,34 @@
+ ul > li{ 
+    width: 7%;
+    float:right;
+    margin-top:10px;
+    margin-right:10px;
+    list-style: none;
+  }
+  table{
+    position: relative;
+    
+  }
+   td{
+     
+   }
+   .nombre {
+     display: inline-block;
+   }
+
+   a{
+     color: white;
+     position: relative;
+     text-decoration: none;
+   }
+   a:link{
+     color: white;
+   }
+   
+
+   a:hover{
+     color: blue;
+     background-color: wheat;
+   }
+
+   

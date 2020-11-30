@@ -28,20 +28,46 @@
             }
 
         }
+        public function buscarEmail($email) {
+            $email = $this->db->consulta("SELECT idUsuario, email FROM usuarios WHERE email = '$email'");
+            if ($email) {
+                return $email;
+            } else {
+                return null;
+            }
 
-        public function get($id) {
+        }
+        public function get($idUsuario)
+        {
+            $result = $this->db->consulta("SELECT * FROM usuarios WHERE idUsuario = '$idUsuario'");
+            return $result;
         }
 
         public function getAll() {
+            $arrayResult = array();
+            $result = $this->db->consulta("SELECT * FROM usuarios" );
+
+            return $result;
+        
         }
 
-        public function insert() {
+        public function insert()
+        {
+            $nombre = $_REQUEST["nombre"];
+            $password = $_REQUEST["pass"];
+            $email = $_REQUEST["email"];
+            $apellido1 = $_REQUEST["apellido1"];
+            $apellido2 = $_REQUEST["apellido2"];
+            $dni = $_REQUEST["dni"];
+    
+            $result = $this->db->manipulacion("INSERT INTO usuarios (nombre,pass,email,apellido1,apellido2,dni) 
+                            VALUES ('$nombre','$password', '$email', '$apellido1', '$apellido2', '$dni')");
+            return $result;
         }
-
-        public function update() {
-        }
-
-        public function delete() {
+        public function delete($id)
+        {
+            $r = $this->db->manipulacion("DELETE FROM usuarios WHERE idUsuario = '$id'");
+            return $r;
         }
 
         public function existeNombre($email) {
@@ -53,4 +79,17 @@
 
         }
 
+        public function update($idUsuario, $email, $pass, $nombre, $apellido1, $apellido2, $dni)
+        {
+            $result = $this->db->manipulacion("UPDATE usuarios SET
+                                    email = '$email',
+                                    pass = '$pass',
+                                    nombre = '$nombre',
+                                    apellido1 = '$apellido1',
+                                    apellido2 = '$apellido2',
+                                    dni = '$dni'
+                                    WHERE idUsuario = '$idUsuario'");
+            return $result;
+        }
+    
     }

@@ -63,11 +63,12 @@ h1,h2,h3,h4,h5,h6 {
 	margin: 0px;
 }
 
+
 p {
 	font-family: OpenSans-Regular;
 	font-size: 14px;
 	line-height: 1.7;
-	color: #666666;
+	color: white;
 	margin: 0px;
 }
 
@@ -76,7 +77,12 @@ ul, li {
 	list-style-type: none;
 }
 
-
+nav{
+  position: absolute;
+  width: 100%;
+  left: 100%;
+  right:0%;
+}
 /*---------------------------------------------*/
 input {
 	outline: none;

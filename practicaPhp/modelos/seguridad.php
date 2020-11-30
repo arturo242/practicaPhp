@@ -6,6 +6,7 @@
             $_SESSION["email"] = $usuario->email;
             $_SESSION["nombre"] = $usuario->nombre;
             //$_SESSION["imagen"] = $usuario->imagen;
+            //$_SESSION["tipo"] = $usuario->tipo;
         }
 
         public function cerrarSesion() {

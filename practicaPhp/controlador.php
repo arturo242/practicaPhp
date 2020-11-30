@@ -22,6 +22,10 @@ class Controlador{
         $this->vista->mostrar("reserva/listaReservas", $data);
     }
 
+	public function mostrarUsuarios() {
+		$data['listaUsuarios'] = $this->usuario->getAll();
+        $this->vista->mostrar("usuario/configuracion", $data);
+	}
     public function mostrarFormularioLogin()
 	{
 		$this->vista->mostrar("usuario/formularioLogin");
@@ -66,25 +70,55 @@ class Controlador{
 	{
 		$this->vista->mostrar("usuario/formularioRegistro");
 	}
+
 	public function insertarUsuario()
 	{
 		$nombre = $_REQUEST["nombre"];
 		$pass = $_REQUEST["pass"];
 		$email = $_REQUEST["email"];
+		$apellido1 = $_REQUEST["apellido1"];
+		$apellido2 = $_REQUEST["apellido2"];
+		$dni = $_REQUEST["dni"];
 
-
-
-		$result = $this->usuario->buscarUsuario($email,$pass,$nombre);
+		$result = $this->usuario->buscarEmail($email);
 
 		if ($result) {
-			// De momento, dejamos aquí este echo. Ya lo quitaremos
-			$data['msjError'] = "Nombre de usuario o email en uso.";
+			$data['msjError'] = "Email en uso.";
 			$this->vista->mostrar("usuario/formularioRegistro", $data);
 		} else {
-			$this->usuario->insert($nombre,$pass,$email);
+			$this->usuario->insert($nombre,$pass,$email,$apellido1,$apellido2,$dni);
 			$data['msjInfo'] = "Registrado correctamente, por favor, inicie sesión.";
 			$this->vista->mostrar("usuario/formularioLogin",$data);
 		}
 		
 	}
+
+	public function formularioModificarUsuario()
+	{
+			$idUsuario = $_REQUEST["idUsuario"];
+			$data['usuario'] = $this->usuario->get($idUsuario);
+			$this->vista->mostrar('usuario/formularioModificarUsuario', $data);
+	}
+	public function modificarUsuario()
+	{
+			$idUsuario = $_REQUEST["idUsuario"];
+			$email = $_REQUEST["email"];
+			$pass = $_REQUEST["pass"];
+			$nombre = $_REQUEST["nombre"];
+			$apellido1 = $_REQUEST["apellido1"];
+			$apellido2 = $_REQUEST["apellido2"];
+			$dni = $_REQUEST["dni"];
+
+			$result = $this->usuario->update($idUsuario, $email, $pass, $nombre, $apellido1, $apellido2, $dni);
+
+			if ($result == 1) {
+				$data['msjInfo'] = "Usuario actualizado con éxito";
+			} else {
+				$data['msjError'] = "Ha ocurrido un error al modificar el usuario. Por favor, inténtelo más tarde.";
+			}
+			$data['listaUsuarios'] = $this->usuario->getAll();
+			$this->vista->mostrar("usuario/configuracion", $data);
+		
+	}
+
 }

@@ -1,27 +1,60 @@
+<link rel="stylesheet" type="text/css" href="css/estilo.css">
+		<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+	<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+	<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+	<!--===============================================================================================-->	
+		<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+	<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+	<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+	<!--===============================================================================================-->	
+		<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+	<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="css/util.css">
+		<link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+
+<body style="background: -webkit-linear-gradient(left, #6a11cb, #2575fc);color:white;">
+<nav  style="
+  "></nav>
+  	<ul class=".nav">
+		<li><form class="login100-form validate-form">	 
+			<input type='hidden' name='action' value='cerrarSesion'>
+			<div class="container-login100-form-btn">
+				<button class="login100-form-btn">Logout</button>
+			</div>			
+		</form>
+		</li>
+		<li>
+		<form class="login100-form validate-form">	 
+			<input type='hidden' name='action' value='mostrarUsuarios'>
+			<div class="container-login100-form-btn">
+				<button class="login100-form-btn">Configuración de Usuarios</button>
+			</div>			
+		</form>
+		</li>
+	</ul>
 <?php
 echo "<h1>Polideportivo</h1>";
 // Mostramos info del usuario logueado (si hay alguno)
 if ($this->seguridad->haySesionIniciada()) {
-	echo "<p>Hola, " . $this->seguridad->get("nombre") . "</p>";
+	echo "<p style='color:white';>Hola, " . $this->seguridad->get("nombre") . "</p>";
 }
 // Mostramos mensaje de error o de información (si hay alguno)
 if (isset($data['msjError'])) {
-	echo "<p style='color:red' id='msjError'>" . $data['msjError'] . "</p>";
+	echo "<p style='color:white' id='msjError'>" . $data['msjError'] . "</p>";
 } else {
-	echo "<p style='color:red' id='msjError'></p>";
+	echo "<p style='color:white' id='msjError'></p>";
 }
 if (isset($data['msjInfo'])) {
-	echo "<p style='color:blue' id='msjInfo'>" . $data['msjInfo'] . "</p>";
+	echo "<p style='color:white' id='msjInfo'>" . $data['msjInfo'] . "</p>";
 } else {
-	echo "<p style='color:blue' id='msjInfo'></p>";
-}
-
-
-// Enlace a "Iniciar sesión" o "Cerrar sesión"
-if (isset($_SESSION["idUsuario"])) {
-	echo "<p><a href='index.php?action=cerrarSesion'>Cerrar sesión</a></p>";
-} else {
-	echo "<p><a href='index.php?action=mostrarFormularioLogin'>Iniciar sesión</a></p>";
+	echo "<p style='color:white' id='msjInfo'></p>";
 }
 
 // Primero, el formulario de búsqueda
