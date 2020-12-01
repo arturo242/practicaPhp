@@ -24,7 +24,7 @@
 			<div class="wrap-login100 p-b-160 p-t-50">
 				<form class="login100-form validate-form" action="index.php">
 					<span class="login100-form-title p-b-43">
-						Account Login
+						Sign Account
 					</span>
 					
 					<div class="wrap-input100 rs1 validate-input" data-validate = "Email is required">

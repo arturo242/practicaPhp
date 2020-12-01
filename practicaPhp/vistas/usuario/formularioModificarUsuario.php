@@ -11,7 +11,7 @@
             echo"
 				<form class='login100-form validate-form' action='index.php'>
 					<span class='login100-form-title p-b-43'>
-						Account Login
+						Modify User
 					</span>
 					
                     <div class='wrap-input100 rs1 validate-input' data-validate = 'Email is required'>
@@ -50,7 +50,7 @@
 
 					<div class='container-login100-form-btn'>
 						<button class='login100-form-btn'>
-							Sign in
+							MOFIFY
 						</button>
 					</div>
 					<div class='text-center w-full p-t-23'>";

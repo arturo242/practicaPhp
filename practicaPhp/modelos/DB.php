@@ -23,9 +23,7 @@ class DB {
         } else {
             $arrayResult = null;
         }
-        if (count($arrayResult) == 1) {
-            $arrayResult = $arrayResult[0];
-        }
+        
         return $arrayResult;
         
     }

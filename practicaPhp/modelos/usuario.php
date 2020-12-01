@@ -20,9 +20,9 @@
          * @return True si existe un usuario con ese nombre y contraseña, false en caso contrario
          */
         public function buscarUsuario($email,$password) {
-            $email = $this->db->consulta("SELECT idUsuario, email, nombre FROM usuarios WHERE email = '$email' AND pass = '$password'");
+            $email = $this->db->consulta("SELECT * FROM usuarios WHERE email = '$email' AND pass = '$password'");
             if ($email) {
-                return $email;
+                return $email[0];
             } else {
                 return null;
             }
@@ -31,7 +31,7 @@
         public function buscarEmail($email) {
             $email = $this->db->consulta("SELECT idUsuario, email FROM usuarios WHERE email = '$email'");
             if ($email) {
-                return $email;
+                return $email[0];
             } else {
                 return null;
             }
@@ -40,14 +40,23 @@
         public function get($idUsuario)
         {
             $result = $this->db->consulta("SELECT * FROM usuarios WHERE idUsuario = '$idUsuario'");
-            return $result;
+            if ($result) {
+                return $result[0];
+            } else {
+                return null;
+            }
         }
 
         public function getAll() {
             $arrayResult = array();
             $result = $this->db->consulta("SELECT * FROM usuarios" );
-
-            return $result;
+            if(count($result) == 1){
+                $arrayResult[]=$result[0];
+                return $arrayResult;
+            }else{
+                return $result;
+            }
+            
         
         }
 
@@ -81,15 +90,35 @@
 
         public function update($idUsuario, $email, $pass, $nombre, $apellido1, $apellido2, $dni)
         {
-            $result = $this->db->manipulacion("UPDATE usuarios SET
+            $arrayResult = array();
+            if($result = $this->db->manipulacion("UPDATE usuarios SET
                                     email = '$email',
                                     pass = '$pass',
                                     nombre = '$nombre',
                                     apellido1 = '$apellido1',
                                     apellido2 = '$apellido2',
                                     dni = '$dni'
-                                    WHERE idUsuario = '$idUsuario'");
-            return $result;
+                                    WHERE idUsuario = '$idUsuario'"))
+            {
+               return $result; 
+            }else{
+                $arrayResult = null;
+            } 
+                                
         }
-    
+        
+        public function busquedaAproximada($textoBusqueda)
+        {
+            $arrayResult = array();
+            if ($result = $this->db->consulta("SELECT * FROM usuarios
+                        WHERE email LIKE '%$textoBusqueda%'
+                        OR nombre LIKE '%$textoBusqueda%'
+                        OR apellido1 LIKE '%$textoBusqueda%'
+                        OR apellido2 LIKE '%$textoBusqueda%'
+                        OR dni LIKE '%$textoBusqueda%'")) {
+              return $result;
+            } else {
+                $arrayResult = null;
+            }
+        }
     }

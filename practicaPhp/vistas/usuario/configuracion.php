@@ -35,13 +35,13 @@
 
 	$(document).ready(function() {
 		$(".btnBorrar").click(function() {
-			if (confirm("¿Está seguro de que desea borrar el libro?")) {
-				$.get("index.php?action=borrarLibroAjax&idLibro=" + this.id, null, function(idLibroBorrado) {
-					if (idLibroBorrado == -1) {
+			if (confirm("¿Está seguro de que desea borrar el usuario?")) {
+				$.get("index.php?action=borrarUsuarioAjax&idUsuario=" + this.id, null, function(idUsuarioBorrado) {
+					if (idUsuarioBorrado == -1) {
 						$('#msjError').html("Ha ocurrido un error al borrar el libro");
 					} else {
-						$('#msjInfo').html("Libro borrado con éxito");
-						$('#libro' + idLibroBorrado).remove();
+						$('#msjInfo').html("Usuario borrado con éxito");
+						$('#usuario' + idUsuarioBorrado).remove();
 					}
 				});
 			}
@@ -74,7 +74,7 @@ echo "<form action='index.php'>
 			<input type='submit' value='Buscar'>
         </form><br>";
 
-if (count($data['listaUsuarios']) > 0) {
+if (is_array($data['listaUsuarios'])) {
 
 	// Ahora, la tabla con los datos de los libros
 	echo "<table border ='1' class='tablas'>";
@@ -85,13 +85,13 @@ if (count($data['listaUsuarios']) > 0) {
 		echo "<td>" . $usuario->apellido1 . "</td>";
 		echo "<td>" . $usuario->apellido2 . "</td>";
 		echo "<td>" . $usuario->dni . "</td>";
-		echo "<td>" . $usuario->tipo . "</td>";
+		//echo "<td>" . $usuario->tipo . "</td>";
 		// Los botones "Modificar" y "Borrar" solo se muestran si hay una sesión iniciada
 		if ($this->seguridad->haySesionIniciada()) {
 			echo "<td><a href='index.php?action=formularioModificarUsuario&idUsuario=" . $usuario->idUsuario . "'>Modificar</a></td>";
-			echo "<td><a href='index.php?action=borrarUsuario&idUsuario=" . $usuario->idUsuario . "'>Borrar mediante enlace</a></td>";
+			//echo "<td><a href='index.php?action=borrarUsuario&idUsuario=" . $usuario->idUsuario . "'>Borrar mediante enlace</a></td>";
 			//echo "<td><a href='#' onclick='borrarPorAjax(" . $libro->idLibro . ")'>Borrar por Ajax/JS</a></td>";
-			//echo "<td><a href='#' class='btnBorrar' id='" . $libro->idLibro . "'>Borrar por Ajax/jQuery</a></td>";
+			echo "<td><a href='#' class='btnBorrar' id='" . $usuario->idUsuario . "'>Borrar</a></td>";
 		}
 		echo "</tr>";
 	}
@@ -102,5 +102,5 @@ if (count($data['listaUsuarios']) > 0) {
 }
 // El botón "Nuevo libro" solo se muestra si hay una sesión iniciada
 if (isset($_SESSION["idUsuario"])) {
-	echo "<p><a href='index.php?action=formularioInsertarLibros'>Nuevo</a></p>";
+	echo "<p><a href='index.php?action=mostrarFormularioRegistro'>Nuevo</a></p>";
 }

@@ -121,4 +121,34 @@ class Controlador{
 		
 	}
 
+	public function borrarUsuarioAjax()
+	{
+		if ($this->seguridad->haySesionIniciada()) {
+			// Recuperamos el id del libro
+			$idUsuario = $_REQUEST["idUsuario"];
+			// Eliminamos el libro de la BD
+			$result = $this->usuario->delete($idUsuario);
+			if ($result == 0) {
+				// Error al borrar. Enviamos el código -1 al JS
+				echo "-1";
+			}
+			else {
+				// Borrado con éxito. Enviamos el id del libro a JS
+				echo $idUsuario;
+			}
+		} else {
+			echo "-1";
+		}
+	}
+
+	public function buscarUsuarios()
+	{
+		// Recuperamos el texto de búsqueda de la variable de formulario
+		$textoBusqueda = $_REQUEST["textoBusqueda"];
+		// Lanzamos la búsqueda y enviamos los resultados a la vista de lista de libros
+		$data['listaUsuarios'] = $this->usuario->busquedaAproximada($textoBusqueda);
+		$data['msjInfo'] = "Resultados de la búsqueda: \"$textoBusqueda\"";
+		$this->vista->mostrar("usuario/configuracion", $data);
+
+	}
 }
