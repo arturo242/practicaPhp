@@ -2,7 +2,7 @@
 include_once("vista.php");
 include_once("modelos/usuario.php");
 include_once("modelos/reserva.php");
-//include_once("modelos/instalacion.php");
+include_once("modelos/instalacion.php");
 include_once("modelos/seguridad.php");
 
 class Controlador{
@@ -13,7 +13,7 @@ class Controlador{
         $this->vista = new Vista();
         $this->usuario = new Usuario();
         $this->reserva = new Reserva();
-       // $this->instalacion = new instalacion();
+        $this->instalacion = new instalacion();
        $this->seguridad = new Seguridad();
     }
 
@@ -22,23 +22,11 @@ class Controlador{
         $this->vista->mostrar("reserva/listaReservas", $data);
     }
 
-	public function mostrarUsuarios() {
-		$data['listaUsuarios'] = $this->usuario->getAll();
-        $this->vista->mostrar("usuario/configuracion", $data);
-	}
-    public function mostrarFormularioLogin()
-	{
-		$this->vista->mostrar("usuario/formularioLogin");
-	}
-
-	/**
-	 * Procesa el formulario de login e inicia la sesión
-	 */
+	/**************************************************   INICIO DE SESION   ************************************************************/
 	public function procesarLogin()
 	{
 		$email = $_REQUEST["email"];
 		$password = $_REQUEST["pass"];
-		//$nombre = $this->seguridad->get("nombre");
 
 		$usuario = $this->usuario->buscarUsuario($email, $password);
 		
@@ -51,10 +39,6 @@ class Controlador{
 			$this->vista->mostrar("usuario/formularioLogin", $data);
 		}
 	}
-
-	/**
-	 * Cierra la sesión
-	 */
 	public function cerrarSesion()
 	{
 		$this->seguridad->cerrarSesion();
@@ -66,6 +50,17 @@ class Controlador{
 		$result = $this->usuario->existeNombre($email);
 		echo $result;
 	}
+
+	/**************************************************   USUARIOS   ***************************************************************/
+	public function mostrarUsuarios() {
+		$data['listaUsuarios'] = $this->usuario->getAll();
+        $this->vista->mostrar("usuario/configuracion", $data);
+	}
+    public function mostrarFormularioLogin()
+	{
+		$this->vista->mostrar("usuario/formularioLogin");
+	}
+	
 	public function mostrarFormularioRegistro()
 	{
 		$this->vista->mostrar("usuario/formularioRegistro");
@@ -151,4 +146,22 @@ class Controlador{
 		$this->vista->mostrar("usuario/configuracion", $data);
 
 	}
+	/**************************************************   INSTALACIONES   ***************************************************************/
+	
+	public function mostrarInstalaciones() {
+		$data['listaInstalaciones'] = $this->instalacion->getAll();
+        $this->vista->mostrar("instalacion/listaInstalaciones", $data);
+	}
+	
+	public function buscarInstalaciones()
+	{
+		// Recuperamos el texto de búsqueda de la variable de formulario
+		$textoBusqueda = $_REQUEST["textoBusqueda"];
+		// Lanzamos la búsqueda y enviamos los resultados a la vista de lista de libros
+		$data['listaInstalaciones'] = $this->instalacion->busquedaAproximada($textoBusqueda);
+		$data['msjInfo'] = "Resultados de la búsqueda: \"$textoBusqueda\"";
+		$this->vista->mostrar("instalacion/listaInstalaciones", $data);
+
+	}
+
 }

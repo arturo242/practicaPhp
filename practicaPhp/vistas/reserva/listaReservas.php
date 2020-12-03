@@ -8,7 +8,7 @@
 		<li><form class="login100-form validate-form">	 
 			<input type='hidden' name='action' value='cerrarSesion'>
 			<div class="container-login100-form-btn">
-				<button class="login100-form-btn">Logout</button>
+				<button class="usuariosButton">Logout</button>
 					
 		</form>
 		</li>
@@ -29,6 +29,12 @@
 		</form>
 		</li>
 	</ul>
+	<nav><form class="login100-form validate-form">	 
+			<input type='hidden' name='action' value='mostrarListaReservas'>
+			<div class="container-login100-form-btn">
+				<button class="usuariosButton">INICIO</button>
+			</div>			
+		</form></nav>
 <?php
 echo "<h1>Polideportivo</h1>";
 // Mostramos info del usuario logueado (si hay alguno)

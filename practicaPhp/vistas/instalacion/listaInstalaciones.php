@@ -4,18 +4,18 @@
 
 <body style="background: -webkit-linear-gradient(left, #6a11cb, #2575fc);color:white;"> 
 <script>
-
+	
 	// **** Petición y respuesta AJAX con jQuery ****
 
 	$(document).ready(function() {
 		$(".btnBorrar").click(function() {
-			if (confirm("¿Está seguro de que desea borrar el usuario?")) {
-				$.get("index.php?action=borrarUsuarioAjax&idUsuario=" + this.id, null, function(idUsuarioBorrado) {
-					if (idUsuarioBorrado == -1) {
-						$('#msjError').html("Ha ocurrido un error al borrar el libro");
+			if (confirm("¿Está seguro de que desea borrar el instalacion?")) {
+				$.get("index.php?action=borrarinstalacionAjax&idInstalacion=" + this.id, null, function(idInstalacionBorrado) {
+					if (idInstalacionBorrado == -1) {
+						$('#msjError').html("Ha ocurrido un error al borrar la instalación");
 					} else {
-						$('#msjInfo').html("Usuario borrado con éxito");
-						$('#usuario' + idUsuarioBorrado).remove();
+						$('#msjInfo').html("instalacion borrado con éxito");
+						$('#instalacion' + idInstalacionBorrado).remove();
 					}
 				});
 			}
@@ -31,7 +31,7 @@
 			</div>			
 		</form></nav>
 <?php
-echo "<h1>Configuración de usuarios</h1>";
+echo "<h1>Configuración de instalaciones</h1>";
 
 // Mostramos mensaje de error o de información (si hay alguno)
 if (isset($data['msjError'])) {
@@ -48,29 +48,29 @@ if (isset($data['msjInfo'])) {
 
 // Primero, el formulario de búsqueda
 echo "<form action='index.php'>
-			<input type='hidden' name='action' value='buscarUsuarios'>
+			<input type='hidden' name='action' value='buscarInstalaciones'>
            	<input type='text' name='textoBusqueda'>
 			<input type='submit' value='Buscar'>
         </form><br>";
 
-if (is_array($data['listaUsuarios'])) {
+if (is_array($data['listaInstalaciones'])) {
 
 	// Ahora, la tabla con los datos de los libros
 	echo "<table border ='1' class='tablas'>";
-	foreach ($data['listaUsuarios'] as $usuario) {
-		echo "<tr id='usuario" . $usuario->idUsuario . "'>";
-		echo "<td>" . $usuario->email . "</td>";
-		echo "<td class='nombre'>" . $usuario->nombre . "</td>";
-		echo "<td>" . $usuario->apellido1 . "</td>";
-		echo "<td>" . $usuario->apellido2 . "</td>";
-		echo "<td>" . $usuario->dni . "</td>";
-		//echo "<td>" . $usuario->tipo . "</td>";
+	foreach ($data['listaInstalaciones'] as $instalacion) {
+		echo "<tr id='instalacion" . $instalacion->idInstalacion . "'>";
+		echo "<td>" . $instalacion->nombre . "</td>";
+		echo "<td class='nombre'>" . $instalacion->$descripcion . "</td>";
+		echo "<td>" . $instalacion->precio . " €</td>";
+        echo "<td>" . $instalacion->idHorario . "</td>";
+		echo "<td><img class='img' src='" . $instalacion->imagen . "'></img></td>";
+		//echo "<td>" . $instalacion->tipo . "</td>";
 		// Los botones "Modificar" y "Borrar" solo se muestran si hay una sesión iniciada
 		if ($this->seguridad->haySesionIniciada()) {
-			echo "<td><a href='index.php?action=formularioModificarUsuario&idUsuario=" . $usuario->idUsuario . "'>Modificar</a></td>";
-			//echo "<td><a href='index.php?action=borrarUsuario&idUsuario=" . $usuario->idUsuario . "'>Borrar mediante enlace</a></td>";
+			echo "<td><a href='index.php?action=formularioModificarinstalacion&idInstalacion=" . $instalacion->idInstalacion . "'>Modificar</a></td>";
+			//echo "<td><a href='index.php?action=borrarinstalacion&idInstalacion=" . $instalacion->idInstalacion . "'>Borrar mediante enlace</a></td>";
 			//echo "<td><a href='#' onclick='borrarPorAjax(" . $libro->idLibro . ")'>Borrar por Ajax/JS</a></td>";
-			echo "<td><a href='#' class='btnBorrar' id='" . $usuario->idUsuario . "'>Borrar</a></td>";
+			echo "<td><a href='#' class='btnBorrar' id='" . $instalacion->idInstalacion . "'>Borrar</a></td>";
 		}
 		echo "</tr>";
 	}
@@ -79,7 +79,6 @@ if (is_array($data['listaUsuarios'])) {
 	// La consulta no contiene registros
 	echo "No se encontraron datos";
 }
-// El botón "Nuevo libro" solo se muestra si hay una sesión iniciada
-if (isset($_SESSION["idUsuario"])) {
-	echo "<p><a href='index.php?action=mostrarFormularioRegistro'>Nuevo</a></p>";
-}
+// El botón "Nueva instalacion" solo se muestra si hay una sesión iniciada
+
+	echo "<p><a href='index.php?action=mostrarInsertarInstalacion'>Nuevo</a></p>";
