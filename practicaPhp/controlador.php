@@ -163,5 +163,62 @@ class Controlador{
 		$this->vista->mostrar("instalacion/listaInstalaciones", $data);
 
 	}
+	
+	public function insertarInstalacion()
+	{
+		$result = $this->instalacion->insert();
+		
+		if($result == 1){
+			$data['msjInfo'] = "Instalación insertada correctamente.";
+		}
+		else{
+			$data['msjError'] = "No se ha podido insertar la instalación.";
+		}
+		$data['listaInstalaciones'] = $this->instalacion->getAll();
+		$this->vista->mostrar("instalacion/listaInstalaciones",$data);
+	}
+	public function borrarInstalacionAjax()
+	{
+		if ($this->seguridad->haySesionIniciada()) {
+			$idInstalacion = $_REQUEST["idInstalacion"];
+			$result = $this->instalacion->delete($idInstalacion);
+			if ($result == 0) {
+				// Error al borrar. Enviamos el código -1 al JS
+				echo "-1";
+			}
+			else {
+				// Borrado con éxito. Enviamos el id del libro a JS
+				echo $idInstalacion;
+			}
+		} else {
+			echo "-1";
+		}
+	}
+
+	public function formularioModificarInstalacion()
+	{
+			$idInstalacion = $_REQUEST["idInstalacion"];
+			$data['instalacion'] = $this->instalacion->get($idInstalacion);
+			$this->vista->mostrar('instalacion/formularioModificarInstalacion', $data);
+	}
+	public function modificarInstalacion()
+	{
+			$idInstalacion = $_REQUEST["idInstalacion"];
+			$nombre = $_REQUEST["nombre"];
+			$descripcion = $_REQUEST["descripcion"];
+			$precio = $_REQUEST["precio"];
+			$idHorario = $_REQUEST["idHorario"];
+
+			$result = $this->instalacion->update($idInstalacion, $nombre, $descripcion, $precio, $idHorario);
+
+			if ($result == 1) {
+				$data['msjInfo'] = "Instalacion actualizada con éxito";
+			} else {
+				$data['msjError'] = "Ha ocurrido un error al modificar la instalación. Por favor, inténtelo más tarde.";
+			}
+			$data['listaInstalaciones'] = $this->instalacion->getAll();
+			$this->vista->mostrar("instalacion/listaInstalaciones", $data);
+		
+	}
 
 }

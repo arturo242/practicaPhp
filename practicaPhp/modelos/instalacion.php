@@ -28,8 +28,8 @@
             }
 
         }
-        public function buscarimagen($imagen) {
-            $imagen = $this->db->consulta("SELECT idInstalacion, imagen FROM instalaciones WHERE imagen = '$imagen'");
+        public function buscarImagen($img) {
+            $imagen = $this->db->consulta("SELECT idInstalacion, imagen FROM instalaciones WHERE imagen = '$img'");
             if ($imagen) {
                 return $imagen[0];
             } else {
@@ -62,15 +62,15 @@
 
         public function insert()
         {
-            $nombre = $_REQUEST["nombre"];
-            $descripcion = $_REQUEST["descripcion"];
-            $imagen = $_REQUEST["imagen"];
-            $precio = $_REQUEST["precio"];
-            $idHorario = $_REQUEST["idHorario"];
-    
-            $result = $this->db->manipulacion("INSERT INTO instalaciones (nombre,descripcion,imagen,precio,idHorario) 
-                            VALUES ('$nombre','$descripcion', '$imagen', '$precio', '$idHorario')");
-            return $result;
+                $nombre = $_REQUEST["nombre"];
+                $descripcion = $_REQUEST["descripcion"];
+                $precio = $_REQUEST["precio"];
+                $idHorario = $_REQUEST["idHorario"];
+        
+                $result = $this->db->manipulacion("INSERT INTO instalaciones (nombre,descripcion,precio,idHorario) 
+                                VALUES ('$nombre','$descripcion', '$precio', '$idHorario')");
+           
+                return $result;
         }
         public function delete($id)
         {
@@ -87,13 +87,23 @@
 
         }
 
-        public function update($idInstalacion, $imagen, $descripcion, $nombre, $precio, $idHorario)
+        public function updateImg(){
+            $ficheroSubido = "img/".$_FILES['fotoInstalacion']['name'].".jpg";
+
+            if(move_uploaded_file($_FILES['fotoInstalacion']['tmp_name'], $ficheroSubido)){
+                $imagen = $ficheroSubido;
+            }
+            else {
+                $result = -1;
+            }
+            return $result;
+        }
+        public function update($idInstalacion, $nombre, $descripcion, $precio, $idHorario)
         {
             $arrayResult = array();
             if($result = $this->db->manipulacion("UPDATE instalaciones SET
-                                    imagen = '$imagen',
-                                    descripcion = '$descripcion',
                                     nombre = '$nombre',
+                                    descripcion = '$descripcion',
                                     precio = '$precio',
                                     idHorario = '$idHorario'
                                     WHERE idInstalacion = '$idInstalacion'"))

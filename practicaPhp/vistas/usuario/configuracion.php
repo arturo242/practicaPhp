@@ -1,8 +1,6 @@
-<link rel="stylesheet" type="text/css" href="css/estilo.css">
-	
-</head>
 
-<body style="background: -webkit-linear-gradient(left, #6a11cb, #2575fc);color:white;"> 
+
+
 <script>
 
 	// **** Petición y respuesta AJAX con jQuery ****
@@ -23,15 +21,10 @@
 	});
 </script>
 
-
-<nav><form class="login100-form validate-form">	 
-			<input type='hidden' name='action' value='mostrarListaReservas'>
-			<div class="container-login100-form-btn">
-				<button class="usuariosButton">INICIO</button>
-			</div>			
-		</form></nav>
+<h1>Configuración de usuarios</h1>
+	</header>
+	<div class="text-center p-t-100">
 <?php
-echo "<h1>Configuración de usuarios</h1>";
 
 // Mostramos mensaje de error o de información (si hay alguno)
 if (isset($data['msjError'])) {
@@ -47,11 +40,21 @@ if (isset($data['msjInfo'])) {
 
 
 // Primero, el formulario de búsqueda
-echo "<form action='index.php'>
-			<input type='hidden' name='action' value='buscarUsuarios'>
-           	<input type='text' name='textoBusqueda'>
-			<input type='submit' value='Buscar'>
-        </form><br>";
+echo "<form action='index.php' class='formB'>
+<input type='hidden' name='action' value='buscarUsuarios'>
+<div class='nuevoB'>
+   <input type='text' name='textoBusqueda' class='busq'>
+	<div class='botonB'>
+		<button class='boton4'>Buscar</button>
+	</div>
+</div>
+</form>
+<form class='nuevo'>	 
+<input type='hidden' name='action' value='mostrarFormularioRegistro'>
+<div class='container-login100-form-btn'>
+<button class='botones'>Nuevo</button>
+</div>			
+</form>";
 
 if (is_array($data['listaUsuarios'])) {
 
@@ -60,14 +63,14 @@ if (is_array($data['listaUsuarios'])) {
 	foreach ($data['listaUsuarios'] as $usuario) {
 		echo "<tr id='usuario" . $usuario->idUsuario . "'>";
 		echo "<td>" . $usuario->email . "</td>";
-		echo "<td class='nombre'>" . $usuario->nombre . "</td>";
+		echo "<td>" . $usuario->nombre . "</td>";
 		echo "<td>" . $usuario->apellido1 . "</td>";
 		echo "<td>" . $usuario->apellido2 . "</td>";
 		echo "<td>" . $usuario->dni . "</td>";
 		//echo "<td>" . $usuario->tipo . "</td>";
 		// Los botones "Modificar" y "Borrar" solo se muestran si hay una sesión iniciada
 		if ($this->seguridad->haySesionIniciada()) {
-			echo "<td><a href='index.php?action=formularioModificarUsuario&idUsuario=" . $usuario->idUsuario . "'>Modificar</a></td>";
+			echo "<td><a class='botones' href='index.php?action=formularioModificarUsuario&idUsuario=" . $usuario->idUsuario . "'>Modificar</a></td>";
 			//echo "<td><a href='index.php?action=borrarUsuario&idUsuario=" . $usuario->idUsuario . "'>Borrar mediante enlace</a></td>";
 			//echo "<td><a href='#' onclick='borrarPorAjax(" . $libro->idLibro . ")'>Borrar por Ajax/JS</a></td>";
 			echo "<td><a href='#' class='btnBorrar' id='" . $usuario->idUsuario . "'>Borrar</a></td>";
@@ -78,8 +81,4 @@ if (is_array($data['listaUsuarios'])) {
 } else {
 	// La consulta no contiene registros
 	echo "No se encontraron datos";
-}
-// El botón "Nuevo libro" solo se muestra si hay una sesión iniciada
-if (isset($_SESSION["idUsuario"])) {
-	echo "<p><a href='index.php?action=mostrarFormularioRegistro'>Nuevo</a></p>";
 }

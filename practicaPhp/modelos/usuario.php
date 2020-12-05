@@ -19,6 +19,9 @@
          * @param password La contraseña del usuario
          * @return True si existe un usuario con ese nombre y contraseña, false en caso contrario
          */
+
+       
+    
         public function buscarUsuario($email,$password) {
             $email = $this->db->consulta("SELECT * FROM usuarios WHERE email = '$email' AND pass = '$password'");
             if ($email) {
@@ -121,4 +124,5 @@
                 $arrayResult = null;
             }
         }
+    
     }

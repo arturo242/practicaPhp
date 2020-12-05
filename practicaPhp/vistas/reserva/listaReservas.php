@@ -1,42 +1,9 @@
-		<link rel="stylesheet" type="text/css" href="css/estilo.css">
-		<link rel="stylesheet" type="text/css" href="css/util.css">
-		<link rel="stylesheet" type="text/css" href="css/main.css">
-</head>
-
-<body style="background: -webkit-linear-gradient(left, #6a11cb, #2575fc);color:white;">
-  	<ul>
-		<li><form class="login100-form validate-form">	 
-			<input type='hidden' name='action' value='cerrarSesion'>
-			<div class="container-login100-form-btn">
-				<button class="usuariosButton">Logout</button>
-					
-		</form>
-		</li>
-		<li>
-		<form class="login100-form validate-form">	 
-			<input type='hidden' name='action' value='mostrarUsuarios'>
-			<div class="container-login100-form-btn">
-				<button class="usuariosButton">Usuarios</button>
-			</div>			
-		</form>
-		</li>
-		<li>
-		<form class="login100-form validate-form">	 
-			<input type='hidden' name='action' value='mostrarInstalaciones'>
-			<div class="container-login100-form-btn">
-				<button class="usuariosButton">Instalaciones</button>
-			</div>			
-		</form>
-		</li>
-	</ul>
-	<nav><form class="login100-form validate-form">	 
-			<input type='hidden' name='action' value='mostrarListaReservas'>
-			<div class="container-login100-form-btn">
-				<button class="usuariosButton">INICIO</button>
-			</div>			
-		</form></nav>
+<h1>Polideportivo - Reservas</h1>
+	</header>
+	<div class="text-center p-t-100">
 <?php
-echo "<h1>Polideportivo</h1>";
+
+echo "";
 // Mostramos info del usuario logueado (si hay alguno)
 if ($this->seguridad->haySesionIniciada()) {
 	echo "<p style='color:white';>Hola, " . $this->seguridad->get("nombre") . "</p>";
@@ -87,3 +54,5 @@ if (count($data['listaReservas']) > 0) {
 if (isset($_SESSION["idUsuario"])) {
 	//echo "<p><a href='index.php?action=formularioInsertarLibros'>Nuevo</a></p>";
 }
+?>
+</div>

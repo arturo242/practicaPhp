@@ -5,7 +5,7 @@
             $_SESSION["idUsuario"] = $usuario->idUsuario;
             $_SESSION["email"] = $usuario->email;
             $_SESSION["nombre"] = $usuario->nombre;
-            //$_SESSION["imagen"] = $usuario->imagen;
+            $_SESSION["imagen"] = $usuario->imagen;
             //$_SESSION["tipo"] = $usuario->tipo;
         }
 
@@ -25,7 +25,7 @@
             }
         }
 
-        public function errorAccesoNoPermitido() {
+        public function errorSesion() {
 			$data['msjError'] = "No tienes permisos para hacer eso";
 			$this->vista->mostrar("usuario/formularioLogin", $data);
         }

@@ -3,7 +3,10 @@
     height: 100%;
     overflow-x: hidden;
   }
-  
+  body{
+    background: -webkit-linear-gradient(left, #6a11cb, #2575fc);color:white;
+  }
+ 
   ul > li{ 
     
     float:right;
@@ -13,31 +16,35 @@
   }
   table{
     position: relative;
-    
+    margin: auto;
   }
   a{
     color: white;
     text-decoration: none;
+    background-color: black;
   }
+
+
   .img{
-    width: 300px;
-    height: 150px;
+    width: 121,6px;
+    height: 92px;
   }
    .nombre {
      display: inline-block;
    }
 
-   
    h1{
-    font-family: OpenSans-Regular, sans-serif;
-    position: relative;
-    left:30%;
-    right: 50%;
-    margin-top: 25px;
+    float: left;
     
    }
-
-   .usuariosButton {
+   nav {
+     float: left;
+     margin-top:10px;
+     margin-left:10px;
+     margin-right:10px;
+     
+   }
+   .botones {
     font-family: OpenSans-Bold;
     font-size: 15px;
     color: #fff;
@@ -67,7 +74,7 @@
    }
 
 
-   .usuariosButton::before {
+   .botones::before {
     content: "";
     display: block;
     position: absolute;
@@ -88,11 +95,313 @@
     transition: all 0.4s;
   }
   
-  .usuariosButton:hover {
+  .botones:hover {
     background-color: transparent;
   }
-  .usuariosButton:hover:before {
+  .botones:hover:before {
     opacity: 1;
   }
+    .btnBorrar {
+      font-family: OpenSans-Bold;
+      font-size: 15px;
+      color: #fff;
+      line-height: 1.2;
+      text-transform: uppercase;
+    
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 20px;
+      width: 100%;
+      height: 70px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #111111;
   
-   
+      -webkit-transition: all 0.4s;
+      -o-transition: all 0.4s;
+      -moz-transition: all 0.4s;
+      transition: all 0.4s;
+      position: relative;
+      z-index: 1;
+     }
+  
+  
+     .btnBorrar::before {
+      content: "";
+      display: block;
+      position: absolute;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+    
+      background: #2575fc;
+      background: -webkit-linear-gradient(right, #6a11cb, #2575fc);
+      background: -o-linear-gradient(right, #6a11cb, #2575fc);
+      background: -moz-linear-gradient(right, #6a11cb, #2575fc);
+      background: linear-gradient(right, #6a11cb, #2575fc);
+    
+      -webkit-transition: all 0.4s;
+      -o-transition: all 0.4s;
+      -moz-transition: all 0.4s;
+      transition: all 0.4s;
+    }
+    
+    .btnBorrar:hover {
+      background-color: transparent;
+    }
+    .btnBorrar:hover:before {
+      opacity: 1;
+    }
+    
+    
+    
+    .nuevo  {
+      float: right;
+      margin-right: 5px;
+    }
+
+    .formB {
+      display: -webkit-flex;
+      display: flex;
+      float: right;
+    }
+    .busq {
+      padding: 30px 30px;
+      border-top-left-radius: 12px;
+      border-bottom-left-radius: 12px;
+      border-top-right-radius: none;
+      border-bottom-right-radius: none;
+      height: 70px;
+      -webkit-flex: 1;
+      -ms-flex: 1;
+      flex: 1;
+      margin-right: 250px;
+     /* display: -webkit-box;
+      display: -webkit-flex;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: flex;*/
+    }
+
+    .botonB{
+      -webkit-flex: 3;
+      -ms-flex: 3;
+      flex: 3;
+      margin-top: -70px;
+      margin-left: 228px;
+      width: 100px;
+    }
+    .botonB .boton4 {
+      border-top-left-radius: none;
+      z-index: 1;
+    }
+
+    .boton4 {
+      font-family: OpenSans-Bold;
+      font-size: 15px;
+      color: #fff;
+      line-height: 1.2;
+      text-transform: uppercase;
+    
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 20px;
+      width: 100%;
+      height: 70px;
+      border-top-left-radius: none;
+      border-bottom-left-radius: none;
+      border-top-right-radius: 12px;
+      border-bottom-right-radius: 12px;
+      overflow: hidden;
+      background: #111111;
+  
+      -webkit-transition: all 0.4s;
+      -o-transition: all 0.4s;
+      -moz-transition: all 0.4s;
+      transition: all 0.4s;
+      position: relative;
+      z-index: 1;
+     }
+  
+  
+     .boton4::before {
+      content: "";
+      display: block;
+      position: absolute;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+    
+      background: #2575fc;
+      background: -webkit-linear-gradient(right, #6a11cb, #2575fc);
+      background: -o-linear-gradient(right, #6a11cb, #2575fc);
+      background: -moz-linear-gradient(right, #6a11cb, #2575fc);
+      background: linear-gradient(right, #6a11cb, #2575fc);
+    
+      -webkit-transition: all 0.4s;
+      -o-transition: all 0.4s;
+      -moz-transition: all 0.4s;
+      transition: all 0.4s;
+    }
+    
+    .boton4:hover {
+      background-color: transparent;
+    }
+    .boton4:hover:before {
+      opacity: 1;
+    }
+
+    .botonX {
+      font-family: OpenSans-Bold;
+      font-size: 15px;
+      color: #fff;
+      line-height: 1.2;
+      text-transform: uppercase;
+    
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 20px;
+      width: 15px;
+      height: 20px;
+      border-radius:12px;
+      overflow: hidden;
+      background: #111111;
+  
+      -webkit-transition: all 0.4s;
+      -o-transition: all 0.4s;
+      -moz-transition: all 0.4s;
+      transition: all 0.4s;
+      position: relative;
+      z-index: 1;
+     }
+  
+  
+     .botonX::before {
+      content: "";
+      display: block;
+      position: absolute;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+    
+      background: #2575fc;
+      background: -webkit-linear-gradient(right, #6a11cb, #2575fc);
+      background: -o-linear-gradient(right, #6a11cb, #2575fc);
+      background: -moz-linear-gradient(right, #6a11cb, #2575fc);
+      background: linear-gradient(right, #6a11cb, #2575fc);
+    
+      -webkit-transition: all 0.4s;
+      -o-transition: all 0.4s;
+      -moz-transition: all 0.4s;
+      transition: all 0.4s;
+    }
+    
+    .botonX:hover {
+      background-color: transparent;
+    }
+    .botonX:hover:before {
+      opacity: 1;
+    }
+
+    input.inputModal{
+      border-radius: 12px;
+      height: 30px;
+      padding: 10px;
+    }
+
+    textarea.inputModal {
+      border-radius: 12px;
+      padding: 10px;
+    }
+    
+    .modal-contenido{
+      background:-webkit-linear-gradient(right, #6a11cb, #2575fc);;
+      width:300px;
+      padding: 10px 20px;
+      margin: 10% auto;
+      position: relative;
+      border-radius: 12px;
+      }
+      .modal{
+        background-color: rgba(51, 0, 47, 0.8);
+        position:fixed;
+        top:0;
+        right:0;
+        bottom:0;
+        left:0;
+        opacity:0;
+        pointer-events:none;
+        transition: all 1s;
+        z-index: 200;
+      }
+      #miModal:target{
+        opacity:1;
+        pointer-events:auto;
+        z-index: 200;
+      }
+
+      .formModal  {
+          margin-top: -20px;
+          
+      }
+      .formModal input{
+       margin-top: 5px;
+      }
+
+      .formModal textarea{
+        margin-top: 5px;
+       }
+
+       .formModal .botones {
+         margin-top: 20px;
+         height: 30px;
+       }
+
+       .modal-contenido2{
+        background:-webkit-linear-gradient(right, #6a11cb, #2575fc);;
+        width:300px;
+        padding: 10px 20px;
+        margin: 10% auto;
+        position: relative;
+        border-radius: 12px;
+        }
+        .modal2{
+          background-color: rgba(51, 0, 47, 0.8);
+          position:fixed;
+          top:0;
+          right:0;
+          bottom:0;
+          left:0;
+          opacity:0;
+          pointer-events:none;
+          transition: all 1s;
+          z-index: 200;
+        }
+        #miModal2:target{
+          opacity:1;
+          pointer-events:auto;
+          z-index: 200;
+        }
+  
+        .formModal2  {
+            margin-top: -20px;
+            
+        }
