@@ -376,7 +376,7 @@
        }
 
        .modal-contenido2{
-        background:-webkit-linear-gradient(right, #6a11cb, #2575fc);;
+        background:-webkit-linear-gradient(right, #6a11cb, #2575fc);
         width:300px;
         padding: 10px 20px;
         margin: 10% auto;
@@ -404,4 +404,23 @@
         .formModal2  {
             margin-top: -20px;
             
+        }
+        
+        .calendario {
+          width: 50%;
+          height: 600px;
+          float: left;
+          background:-webkit-linear-gradient(right, #6a11cb, #2575fc);
+          
+          border-radius: 20px;
+          padding: 20px;
+          margin-bottom: 130px;
+        }
+        .calendario td{
+          font-size:90%; 
+          position:relative; 
+          margin: 200px;
+          border-collapse: collapse;
+          border-radius: 20px;
+          border: 1px none ;
         }
