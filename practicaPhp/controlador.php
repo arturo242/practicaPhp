@@ -17,10 +17,11 @@ class Controlador{
        $this->seguridad = new Seguridad();
     }
 
-    public function mostrarListaReservas(){
+	public function mostrarListaReservas(){
         $data['listaReservas'] = $this->reserva->getAll();
         $this->vista->mostrar("reserva/listaReservas", $data);
     }
+
 
 	/**************************************************   INICIO DE SESION   ************************************************************/
 	public function procesarLogin()
@@ -50,6 +51,14 @@ class Controlador{
 		$result = $this->usuario->existeNombre($email);
 		echo $result;
 	}
+	/**************************************************   RESERVAS   ***************************************************************/
+
+	public function formularioReserva(){
+		$fecha = $_REQUEST["fecha"];
+		$data['listaReservas'] = $this->reserva->getAllDia($fecha);
+		$data['listaInstalaciones'] = $this->instalacion->getAll();
+        $this->vista->mostrar("reserva/formularioReserva", $data);
+    }
 
 	/**************************************************   USUARIOS   ***************************************************************/
 	public function mostrarUsuarios() {
@@ -119,9 +128,7 @@ class Controlador{
 	public function borrarUsuarioAjax()
 	{
 		if ($this->seguridad->haySesionIniciada()) {
-			// Recuperamos el id del libro
 			$idUsuario = $_REQUEST["idUsuario"];
-			// Eliminamos el libro de la BD
 			$result = $this->usuario->delete($idUsuario);
 			if ($result == 0) {
 				// Error al borrar. Enviamos el código -1 al JS
@@ -220,5 +227,5 @@ class Controlador{
 			$this->vista->mostrar("instalacion/listaInstalaciones", $data);
 		
 	}
-
+	
 }

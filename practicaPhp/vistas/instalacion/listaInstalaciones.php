@@ -111,6 +111,5 @@ if (is_array($data['listaInstalaciones'])) {
 	// La consulta no contiene registros
 	echo "No se encontraron datos";
 }
-// El botón "Nueva instalacion" solo se muestra si hay una sesión iniciada
 
 	

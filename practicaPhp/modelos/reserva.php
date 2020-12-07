@@ -23,4 +23,14 @@ class Reserva
 
         return $result;
     }
+    public function getAllDia($fecha)
+    {
+        $arrayResult = array();
+        $result = $this->db->consulta("SELECT * FROM reservas
+                                            WHERE fecha = '$fecha'" );
+
+        return $result;
+    }
+
+
 }

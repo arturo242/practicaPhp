@@ -3,8 +3,6 @@
 	<div class="text-center p-t-100">
 <?php
 
-echo "";
-// Mostramos info del usuario logueado (si hay alguno)
 if ($this->seguridad->haySesionIniciada()) {
 	echo "<p style='color:white';>Hola, " . $this->seguridad->get("nombre") . "</p>";
 }
@@ -20,36 +18,7 @@ if (isset($data['msjInfo'])) {
 	echo "<p style='color:white' id='msjInfo'></p>";
 }
 
-// Primero, el formulario de búsqueda
-/*echo "<form action='index.php'>
-			<input type='hidden' name='action' value='buscarLibros'>
-           	<input type='text' name='textoBusqueda'>
-			<input type='submit' value='Buscar'>
-            </form><br>";
-*/
-if (count($data['listaReservas']) > 0) {
 
-	// Ahora, la tabla con los datos de los libros
-	echo "<table border ='1'>";
-	foreach ($data['listaReservas'] as $reserva) {
-		echo "<tr id='reserva" . $reserva->idReserva . "'>";
-		echo "<td>" . $reserva->fecha . "</td>";
-		echo "<td>" . $reserva->hora . "</td>";
-		echo "<td>" . $reserva->precio . "€</td>";
-		// Los botones "Modificar" y "Borrar" solo se muestran si hay una sesión iniciada
-		if ($this->seguridad->haySesionIniciada()) {
-			//echo "<td><a href='index.php?action=formularioModificarLibro&idLibro=" . $reserva->idLibro . "'>Modificar</a></td>";
-			//echo "<td><a href='index.php?action=borrarLibro&idLibro=" . $reserva->idLibro . "'>Borrar mediante enlace</a></td>";
-			//echo "<td><a href='#' onclick='borrarPorAjax(" . $reserva->idLibro . ")'>Borrar por Ajax/JS</a></td>";
-			//echo "<td><a href='#' class='btnBorrar' id='" . $reserva->idLibro . "'>Borrar por Ajax/jQuery</a></td>";
-		}
-		echo "</tr>";
-	}
-	echo "</table>";
-} else {
-	// La consulta no contiene registros
-	echo "No se encontraron datos";
-}
 /*********************************************************************  CALENDARIO   **********************************************************************/
 
 
@@ -90,17 +59,19 @@ if (count($data['listaReservas']) > 0) {
                         } else {
 
                             // mostramos el dia
-                            if ($day == $diaActual)
-								echo "<td class='hoy' style=''><form action='index.php'>
-								<input type='hidden' name='action' value='formularioReserva&fecha=" . $year . "-" . $month . "-" . $day ."'>
-								<button style='background:-webkit-linear-gradient(left, #6a11cb, #2575fc);border: 2px solid black;'
-								 class='botones'id='ano".$year."mes".$month."dia".$day."'>$day<form></td>";
-
-                            else
-								echo "<td><form action='index.php'><input type='hidden' name='action' value='formularioReserva&fecha=" . $year . "-" . $month . "-" . $day ."'><button style='background:none'
-								 class='botones'id='ano".$year."mes".$month."dia".$day."'>$day<form></td>";
-
-                            $day++;
+                            if ($day == $diaActual){
+								echo "<td>
+								<a style='background:-webkit-linear-gradient(left, #6a11cb, #2575fc);border: 2px solid black;'
+								href='index.php?action=formularioReserva&fecha=".$year."-".$month."-".$day."'
+								class='botones'id='ano".$year."mes".$month."dia".$day."'>$day</a></td>";
+								$day++;
+							}
+                            else { 
+								echo "<td>
+								<a style='background:none' href='index.php?action=formularioReserva&fecha=".$year."-".$month."-".$day."' 
+								class='botones' id='ano".$year."mes".$month."dia".$day."'>$day</a><form></td>";
+								$day++;
+							}
                         }
 
                         // cuando llega al final de la semana, iniciamos una columna nueva
@@ -150,9 +121,9 @@ if (count($data['listaReservas']) > 0) {
                         } else {
 
 							// mostramos el dia
-							echo "<td><form action='index.php'>
-								<input type='hidden' name='action' value='formularioReserva&fecha=" . $year . "-" . $month . "-" . $day . "'>
-								<button style='background:none' class='botones'id='ano" . $year . "mes" . $month . "dia" . $day . "'>$day<form></td>";
+							echo "<td>
+								<a style='background:none' href='index.php?action=formularioReserva&fecha=".$year."-".$month."-".$day."' 
+								class='botones' id='ano".$year."mes".$month."dia".$day."'>$day</a><form></td>";
 								$day++;
 
 							
@@ -176,7 +147,6 @@ if (count($data['listaReservas']) > 0) {
 							echo "<script>
 								var dia = document.getElementById('ano".$anoReserva."mes".$mesReserva."dia".$diaReserva."');
 								dia.style.background = '-webkit-linear-gradient(right, #01c90b, #9abfff)';
-
 							</script>";
 						//}
 					}
