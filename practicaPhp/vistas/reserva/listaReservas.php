@@ -92,12 +92,13 @@ if (count($data['listaReservas']) > 0) {
                             // mostramos el dia
                             if ($day == $diaActual)
 								echo "<td class='hoy' style=''><form action='index.php'>
-								<input type='hidden' name='action' value='modificarReserva'><button style='background:-webkit-linear-gradient(left, #6a11cb, #2575fc);'
-								 class='botones'id='$day'>$day<form></td>";
+								<input type='hidden' name='action' value='formularioReserva&fecha=" . $year . "-" . $month . "-" . $day ."'>
+								<button style='background:-webkit-linear-gradient(left, #6a11cb, #2575fc);border: 2px solid black;'
+								 class='botones'id='ano".$year."mes".$month."dia".$day."'>$day<form></td>";
 
                             else
-								echo "<td><form action='index.php'><input type='hidden' name='action' value='modificarReserva'><button style='background:none'
-								 class='botones'id='$day'>$day<form></td>";
+								echo "<td><form action='index.php'><input type='hidden' name='action' value='formularioReserva&fecha=" . $year . "-" . $month . "-" . $day ."'><button style='background:none'
+								 class='botones'id='ano".$year."mes".$month."dia".$day."'>$day<form></td>";
 
                             $day++;
                         }
@@ -149,8 +150,9 @@ if (count($data['listaReservas']) > 0) {
                         } else {
 
 							// mostramos el dia
-							echo "<td><form action='index.php'><input type='hidden' name='action' value='modificarReserva&idReserva='". $reserva->idReserva .">
-								<button style='background:none' class='botones'id='$day'>$day<form></td>";
+							echo "<td><form action='index.php'>
+								<input type='hidden' name='action' value='formularioReserva&fecha=" . $year . "-" . $month . "-" . $day . "'>
+								<button style='background:none' class='botones'id='ano" . $year . "mes" . $month . "dia" . $day . "'>$day<form></td>";
 								$day++;
 
 							
@@ -172,7 +174,7 @@ if (count($data['listaReservas']) > 0) {
 						$diaReserva = date('j',strtotime($reserva->fecha));
 						//if($anoReserva == $year ){
 							echo "<script>
-								var dia = document.getElementById('".$diaReserva."');
+								var dia = document.getElementById('ano".$anoReserva."mes".$mesReserva."dia".$diaReserva."');
 								dia.style.background = '-webkit-linear-gradient(right, #01c90b, #9abfff)';
 
 							</script>";
