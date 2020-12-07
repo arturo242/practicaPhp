@@ -2,11 +2,19 @@
 	</header>
 	
 	<script>
-
-	// **** Petición y respuesta AJAX con jQuery ****
-
-	$(document).ready(function() {
-		$(".btnBorrar").click(function() {
+    $(document).ready(function(){
+        
+        $(".actualizar").change(function () {
+            $.get("index.php?action=cambiarHorario&idInstalacion=" + this.id, null,  function(data){
+                
+                    $("#horario").append("<td>"+data+"</td><td><button></td>")
+            });
+            $.get("index.php?action=cambiarPrecio&idInstalacion=" + this.id, null,  function(data){
+                    $("#precio").html(this.id)
+            });
+        })
+    }); 
+   /* $(".btnBorrar").click(function() {
 			if (confirm("¿Está seguro de que desea borrar el usuario?")) {
 				$.get("index.php?action=borrarInstalacionAjax&idInstalacion=" + this.id, null, function(idInstalacionBorrado) {
 					if (idInstalacionBorrado == -1) {
@@ -17,8 +25,7 @@
 					}
 				});
 			}
-		});
-	});
+		});*/
 	</script>
 <?php
 // Mostramos mensaje de error o de información (si hay alguno)
@@ -32,9 +39,7 @@ if (isset($data['msjInfo'])) {
 } else {
 	echo "<p style='color:white' id='msjInfo'></p>";
 }
-if (count($data['listaReservas']) > 0) {
-
-    echo " <div class='text-center p-t-100'>
+echo " <div class='text-center p-t-100'>
                         
             <div id='miModal' class='modal'>
                 <div class='modal-contenido'>
@@ -42,13 +47,22 @@ if (count($data['listaReservas']) > 0) {
                 <form action='index.php' class='formModal'>
                     <input type='hidden' name='action' value='insertarReserva' required>";
                                             
-                echo "<p>Instalación: </p><select name='instalaciones[]'>";
+                echo "Instalación <br><select name='instalaciones[]' class='actualizar'>";
                 foreach ($data['listaInstalaciones'] as $instalacion) {
-                    echo "<option value='" . $instalacion->idInstalacion . "'>" . $instalacion->nombre . "</option>";
+                    echo "<option id='instalacion" . $instalacion->idInstalacion . "' value='" . $instalacion->idInstalacion . "'>" . $instalacion->nombre . "</option>";
+                    echo $instalacion->idInstalacion;
                 }
-                echo "</select>
-                <p>Hora</p> <input type='text' class='inputModal' name='hora'>
-                <p>Precio = </p>
+                echo "</select><br>
+                Horas<br>
+                            <table>
+                                <tbody class='hora'>";
+                                
+                                    echo"<tr id='horario'>
+                                        
+                                    </tr>";
+                            echo"</tbody>
+                            </table>
+                Precio = <span id='precio'></span>
                 
                 <div class='container-login100-form-btn'>
                     <button class='botones'>Nueva</button>
@@ -58,7 +72,7 @@ if (count($data['listaReservas']) > 0) {
     </div>  
 </div>
 </div>";
-	// Ahora, la tabla con los datos de los libros
+if (count($data['listaReservas']) > 0) {
 	echo "<table border ='1'>";
 	foreach ($data['listaReservas'] as $reserva) {
 		echo "<tr id='reserva" . $reserva->idReserva . "'>";
@@ -75,7 +89,7 @@ if (count($data['listaReservas']) > 0) {
 		echo "</tr>";
 	}
     echo "</table>
-    <form class='nuevo' style='float:none;width:200px;position:relative;margin:auto;'>	
+    <form class='nuevo' style='float:none;width:230px;position:relative;margin:auto;'>	
             <div class='container-login100-form-btn'>
                 <a class='botones' href='#miModal'>Hacer otra reserva</a>
             </div>			

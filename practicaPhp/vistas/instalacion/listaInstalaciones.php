@@ -85,7 +85,7 @@ if (is_array($data['listaInstalaciones'])) {
         echo "<td>" . $instalacion->idHorario . "</td>";
 		if(isset($instalacion->imagen)){
 		echo "<td><img class='img' src='" . $instalacion->imagen . "'></img></td>";
-		}
+		} 
 			echo"<td>
 			<form method='POST' action='index.php' enctype='multipart/form-data'>
 							<input type='file' name='fotoInstalacion'>

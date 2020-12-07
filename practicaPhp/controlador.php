@@ -4,16 +4,17 @@ include_once("modelos/usuario.php");
 include_once("modelos/reserva.php");
 include_once("modelos/instalacion.php");
 include_once("modelos/seguridad.php");
-
+include_once("modelos/horario.php");
 class Controlador{
 
-    private $vista, $usuario, $reserva, $instalacion;
+    private $vista, $usuario, $reserva, $instalacion,$horario;
 
     public function __construct(){
         $this->vista = new Vista();
         $this->usuario = new Usuario();
         $this->reserva = new Reserva();
-        $this->instalacion = new instalacion();
+		$this->instalacion = new Instalacion();
+		$this->horario = new Horario();
        $this->seguridad = new Seguridad();
     }
 
@@ -58,8 +59,31 @@ class Controlador{
 		$data['listaReservas'] = $this->reserva->getAllDia($fecha);
 		$data['listaInstalaciones'] = $this->instalacion->getAll();
         $this->vista->mostrar("reserva/formularioReserva", $data);
-    }
-
+	}
+	
+	public function cambiarHorario()
+	{
+			$idInstalacion = $_REQUEST["idInstalacion"];
+			$result = $this->horario->getHoras($idInstalacion);
+			if ($result == 0) {
+				// Error al borrar. Enviamos el código -1 al JS
+				echo "";
+			}
+			else {
+				// Borrado con éxito. Enviamos el id del libro a JS
+				echo $idInstalacion;
+			}
+		
+	}
+	public function cambiarPrecio()
+	{
+			$idInstalacion = $_REQUEST["idInstalacion"];
+			echo $idInstalacion;
+			$result = $this->instalacion->getPrecio($idInstalacion);
+			echo $result;
+			
+		
+	}
 	/**************************************************   USUARIOS   ***************************************************************/
 	public function mostrarUsuarios() {
 		$data['listaUsuarios'] = $this->usuario->getAll();

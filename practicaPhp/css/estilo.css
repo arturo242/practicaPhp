@@ -423,3 +423,24 @@
           border-radius: 20px;
           border: 1px none ;
         }
+
+        .hora td{
+          text-align: center;
+          border: 1px solid;
+          height: 20px;
+          width: 70px;
+          
+        }
+        .hora td button{
+          border: none;
+          background: -webkit-linear-gradient(right, #01c90b, #9abfff);
+          height: 20px;
+          width: 70px;
+         }
+        .hora td button:hover{
+          cursor: pointer;
+          background: -webkit-linear-gradient(left, #01c90b, #9abfff) ;
+        }
+        .hora.margen{
+          margin-right: 50px;
+        }

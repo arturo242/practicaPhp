@@ -46,6 +46,17 @@
                 return null;
             }
         }
+        public function getPrecio($idInstalacion)
+        {echo "SELECT precio FROM instalaciones WHERE idInstalacion = '$idInstalacion'";
+            $result = $this->db->consulta("SELECT precio FROM instalaciones WHERE idInstalacion = '$idInstalacion'");
+            if ($result) {
+                return $result[0];
+            } else {
+                return null;
+            }
+        }
+
+
 
         public function getAll() {
             $arrayResult = array();
