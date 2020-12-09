@@ -32,11 +32,14 @@
         }
 
         public function getHoras($idInstalacion){
-            $arrayResult = array();
-            $result = $this->db->consulta("SELECT horarios.horaInicio,horarios.horaFin FROM horarios 
+            $result = $this->db->consulta("SELECT * FROM horarios 
                                         INNER JOIN instalaciones 
                                             ON horarios.idHorario = instalaciones.idHorario 
-                                            WHERE idHorario=".$idInstalacion);
-            return $result;
+                                            WHERE instalaciones.idInstalacion='$idInstalacion'");
+            if ($result) {
+                return $result[0];
+            } else {
+                return null;
+            }
         }
     }

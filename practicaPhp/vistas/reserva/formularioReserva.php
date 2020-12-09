@@ -4,13 +4,22 @@
 	<script>
     $(document).ready(function(){
         
-        $(".actualizar").change(function () {
-            $.get("index.php?action=cambiarHorario&idInstalacion=" + this.id, null,  function(data){
-                
-                    $("#horario").append("<td>"+data+"</td><td><button></td>")
+        
+        $("#miSel").change(function () {
+            var idOpt = $('select[id=miSel]').val();
+            $(".horas").remove();
+            $.get("index.php?action=cambiarHorario&idInstalacion=" + idOpt, null,  function(data){
+                var horaInicio = parseInt(data.substr(0,2));
+                var horaFin = parseInt(data.substr(8,2));
+                for (var i=horaInicio; i<horaFin+1; i++) {
+                    
+                    $("#horario").append("<tr class='horas'><td>"+i+"</td><td><input type='radio' name='horas'></td></tr>")
+                }
+
+                    
             });
-            $.get("index.php?action=cambiarPrecio&idInstalacion=" + this.id, null,  function(data){
-                    $("#precio").html(this.id)
+            $.get("index.php?action=cambiarPrecio&idInstalacion=" + idOpt, null,  function(data){
+                    $("#precio").html(data)
             });
         })
     }); 
@@ -47,19 +56,16 @@ echo " <div class='text-center p-t-100'>
                 <form action='index.php' class='formModal'>
                     <input type='hidden' name='action' value='insertarReserva' required>";
                                             
-                echo "Instalación <br><select name='instalaciones[]' class='actualizar'>";
+                echo "Instalación <br><select name='instalaciones[]' id='miSel' class='actualizar'>
+                <option>--Selecciona una instalación--</option>";                
                 foreach ($data['listaInstalaciones'] as $instalacion) {
-                    echo "<option id='instalacion" . $instalacion->idInstalacion . "' value='" . $instalacion->idInstalacion . "'>" . $instalacion->nombre . "</option>";
-                    echo $instalacion->idInstalacion;
+                    echo "<option value='" . $instalacion->idInstalacion .
+                    "'>" . $instalacion->nombre . "</option>";
                 }
                 echo "</select><br>
                 Horas<br>
                             <table>
-                                <tbody class='hora'>";
-                                
-                                    echo"<tr id='horario'>
-                                        
-                                    </tr>";
+                                <tbody id='horario'>";
                             echo"</tbody>
                             </table>
                 Precio = <span id='precio'></span>
@@ -71,32 +77,41 @@ echo " <div class='text-center p-t-100'>
             </form>
     </div>  
 </div>
-</div>";
+<h2 id='fecha'></h2>
+</div>
+";
 if (count($data['listaReservas']) > 0) {
-	echo "<table border ='1'>";
+    echo "<table border ='1'>";
 	foreach ($data['listaReservas'] as $reserva) {
+        
 		echo "<tr id='reserva" . $reserva->idReserva . "'>";
-		echo "<td>" . $reserva->fecha . "</td>";
 		echo "<td>" . $reserva->hora . "</td>";
-		echo "<td>" . $reserva->precio . "€</td>";
+        echo "<td>" . $reserva->precio . "€</td>";
+        echo "<script>
+            var res = '$reserva->fecha'
+            res = 'Reservas del día '+res.substr(9)+' del '+res.substr(8,2)+' de ' + res.substr(0,4)
+
+            document.getElementById('fecha').innerHTML=res
+             </script>";
 		// Los botones "Modificar" y "Borrar" solo se muestran si hay una sesión iniciada
 		if ($this->seguridad->haySesionIniciada()) {
 			//echo "<td><a href='index.php?action=formularioModificarLibro&idLibro=" . $reserva->idLibro . "'>Modificar</a></td>";
 			//echo "<td><a href='index.php?action=borrarLibro&idLibro=" . $reserva->idLibro . "'>Borrar mediante enlace</a></td>";
 			//echo "<td><a href='#' onclick='borrarPorAjax(" . $reserva->idLibro . ")'>Borrar por Ajax/JS</a></td>";
-			//echo "<td><a href='#' class='btnBorrar' id='" . $reserva->idLibro . "'>Borrar por Ajax/jQuery</a></td>";
+            //echo "<td><a href='#' class='btnBorrar' id='" . $reserva->idLibro . "'>Borrar por Ajax/jQuery</a></td>";
+            
 		}
-		echo "</tr>";
-	}
-    echo "</table>
-    <form class='nuevo' style='float:none;width:230px;position:relative;margin:auto;'>	
+		echo "</tr></table>";
+    }
+    if (count($data['listaReservas']) < 2) {
+    echo "<form class='nuevo' style='float:none;width:230px;position:relative;margin:auto;'>	
             <div class='container-login100-form-btn'>
                 <a class='botones' href='#miModal'>Hacer otra reserva</a>
             </div>			
         </form>";
+    }
 } else {
-	// La consulta no contiene registros
-	echo "<form class='nuevo' style='float:none;width:200px;position:relative;margin:auto;'>	
+    echo "<h2 align='center'>No hay reservas para este dia</h2><form class='nuevo' style='float:none;width:200px;position:relative;margin:auto;'>	
             <div class='container-login100-form-btn'>
                 <a class='botones' href='#miModal'>Hacer reserva</a>
             </div>			

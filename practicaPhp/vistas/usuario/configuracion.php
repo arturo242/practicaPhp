@@ -1,6 +1,26 @@
-
-
-
+<h1>Configuración de usuarios</h1>
+	</header>
+	<div class="text-center p-t-100">
+	<div id="miModal" class="modal">
+			<div class="modal-contenido">
+				<a href="#" class="botonX">X</a>
+					<form action='index.php' class="formModal">
+						<h2>NUEVO USUARIO</h2>
+						<input type='hidden' name='action' value='insertarUsuario'>
+						<p>Email</p> <input type='text' name='email' class='inputModal' required>
+						<p>Password</p> <input type='password' class='inputModal' name='password'>
+                        <p>Nombre</p> <input type='text' name='nombre' class='inputModal' required>
+						<p>Primer Apellido</p> <input type='text' name='apellido1' class='inputModal'>
+						<p>Segundo Apellido</p> <input type='text' name='apellido2' class='inputModal'>
+                        <p>DNI</p> <input type='text' name='dni' class='inputModal' required>
+						<div class='container-login100-form-btn'>
+							<button class='botones'>Nuevo</button>
+						</div>	
+						
+					</form>
+			</div>  
+		</div>
+	</div>
 <script>
 
 	// **** Petición y respuesta AJAX con jQuery ****
@@ -21,9 +41,7 @@
 	});
 </script>
 
-<h1>Configuración de usuarios</h1>
-	</header>
-	<div class="text-center p-t-100">
+
 <?php
 
 // Mostramos mensaje de error o de información (si hay alguno)
@@ -49,12 +67,11 @@ echo "<form action='index.php' class='formB'>
 	</div>
 </div>
 </form>
-<form class='nuevo'>	 
-<input type='hidden' name='action' value='mostrarFormularioRegistro'>
-<div class='container-login100-form-btn'>
-<button class='botones'>Nuevo</button>
-</div>			
-</form>";
+<form class='nuevo'>	
+		<div class='container-login100-form-btn'>
+			<a class='botones' href='#miModal'>Nuevo</a>
+		</div>			
+	</form>";
 
 if (is_array($data['listaUsuarios'])) {
 

@@ -66,15 +66,20 @@
         public function insert()
         {
             $nombre = $_REQUEST["nombre"];
-            $password = $_REQUEST["pass"];
+            $password = $_REQUEST["password"];
             $email = $_REQUEST["email"];
             $apellido1 = $_REQUEST["apellido1"];
             $apellido2 = $_REQUEST["apellido2"];
             $dni = $_REQUEST["dni"];
-    
-            $result = $this->db->manipulacion("INSERT INTO usuarios (nombre,pass,email,apellido1,apellido2,dni) 
+
+            $existeEmail = $this->buscarEmail($email);
+            if ($existeEmail) {
+                $result = -1;
+            }else{
+                $result = $this->db->manipulacion("INSERT INTO usuarios (nombre,pass,email,apellido1,apellido2,dni) 
                             VALUES ('$nombre','$password', '$email', '$apellido1', '$apellido2', '$dni')");
-            return $result;
+            }
+             return $result;
         }
         public function delete($id)
         {

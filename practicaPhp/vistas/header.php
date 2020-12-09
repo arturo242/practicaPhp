@@ -39,13 +39,15 @@ echo "<header id='cabecera'>
 			</div>			
 		</form>
 		</li>
-	</ul>
-	
-	<nav><form class='login100-form validate-form'>	 
+		<li>
+		<form class='login100-form validate-form'>	 
 			<input type='hidden' name='action' value='mostrarListaReservas'>
 			<div class='container-login100-form-btn'>
-				<button class='botones'>INICIO</button>
+				<button class='botones'>Reservas</button>
 			</div>			
-		</form></nav>";
+		</form>
+		</li>
+	</ul>
+	</ul>";
 
 ?>

@@ -3,22 +3,10 @@
 
     class Instalacion {
         private $db;
-        
-        /**
-         * Constructor. Establece la conexión con la BD y la guarda
-         * en una variable de la clase
-         */
         public function __construct() {
             $this->db = new DB();
-        }
-
-       
-        /**
-         * Busca un usuario por nombre de usuario y descripcion
-         * @param usuario El nombre del usuario
-         * @param descripcion La contraseña del usuario
-         * @return True si existe un usuario con ese nombre y contraseña, false en caso contrario
-         */
+        }       
+        
         public function buscarUsuario($imagen,$descripcion) {
             $imagen = $this->db->consulta("SELECT * FROM instalaciones WHERE imagen = '$imagen' AND descripcion = '$descripcion'");
             if ($imagen) {
@@ -46,16 +34,6 @@
                 return null;
             }
         }
-        public function getPrecio($idInstalacion)
-        {echo "SELECT precio FROM instalaciones WHERE idInstalacion = '$idInstalacion'";
-            $result = $this->db->consulta("SELECT precio FROM instalaciones WHERE idInstalacion = '$idInstalacion'");
-            if ($result) {
-                return $result[0];
-            } else {
-                return null;
-            }
-        }
-
 
 
         public function getAll() {

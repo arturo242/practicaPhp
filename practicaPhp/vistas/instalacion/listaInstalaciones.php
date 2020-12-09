@@ -19,11 +19,6 @@
 					</form>
 			</div>  
 		</div>
-		<div id='miModal2' class='modal2'>
-			<div class='modal-contenido2'>
-				<a href='#' class='botonX'>X</a>
-			
-		</div>
 	</div>
 	<script>
 

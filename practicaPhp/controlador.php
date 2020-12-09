@@ -64,25 +64,17 @@ class Controlador{
 	public function cambiarHorario()
 	{
 			$idInstalacion = $_REQUEST["idInstalacion"];
-			$result = $this->horario->getHoras($idInstalacion);
-			if ($result == 0) {
-				// Error al borrar. Enviamos el código -1 al JS
-				echo "";
-			}
-			else {
-				// Borrado con éxito. Enviamos el id del libro a JS
-				echo $idInstalacion;
-			}
-		
+			$data['horas'] = $this->horario->getHoras($idInstalacion);
+			$horario = $data['horas'];
+				echo $horario->horaInicio;
+				echo $horario->horaFin;
 	}
 	public function cambiarPrecio()
 	{
 			$idInstalacion = $_REQUEST["idInstalacion"];
-			echo $idInstalacion;
-			$result = $this->instalacion->getPrecio($idInstalacion);
-			echo $result;
-			
-		
+			$data['precio'] = $this->instalacion->get($idInstalacion);
+			$instalacion = $data['precio'];
+				echo $instalacion->precio;
 	}
 	/**************************************************   USUARIOS   ***************************************************************/
 	public function mostrarUsuarios() {
@@ -101,23 +93,17 @@ class Controlador{
 
 	public function insertarUsuario()
 	{
-		$nombre = $_REQUEST["nombre"];
-		$pass = $_REQUEST["pass"];
-		$email = $_REQUEST["email"];
-		$apellido1 = $_REQUEST["apellido1"];
-		$apellido2 = $_REQUEST["apellido2"];
-		$dni = $_REQUEST["dni"];
+		$result = $this->usuario->insert();
 
-		$result = $this->usuario->buscarEmail($email);
-
-		if ($result) {
-			$data['msjError'] = "Email en uso.";
-			$this->vista->mostrar("usuario/formularioRegistro", $data);
-		} else {
-			$this->usuario->insert($nombre,$pass,$email,$apellido1,$apellido2,$dni);
-			$data['msjInfo'] = "Registrado correctamente, por favor, inicie sesión.";
-			$this->vista->mostrar("usuario/formularioLogin",$data);
+		if($result == 1){
+			$data['msjInfo'] = "Usuario insertado correctamente.";
 		}
+		else{
+			$data['msjError'] = "Email en uso.";
+		}
+
+		$data['listaUsuarios'] = $this->usuario->getAll();
+		$this->vista->mostrar("usuario/configuracion",$data);
 		
 	}
 
@@ -131,21 +117,22 @@ class Controlador{
 	{
 			$idUsuario = $_REQUEST["idUsuario"];
 			$email = $_REQUEST["email"];
-			$pass = $_REQUEST["pass"];
+			$pass = $_REQUEST["password"];
 			$nombre = $_REQUEST["nombre"];
 			$apellido1 = $_REQUEST["apellido1"];
 			$apellido2 = $_REQUEST["apellido2"];
 			$dni = $_REQUEST["dni"];
 
-			$result = $this->usuario->update($idUsuario, $email, $pass, $nombre, $apellido1, $apellido2, $dni);
-
-			if ($result == 1) {
-				$data['msjInfo'] = "Usuario actualizado con éxito";
-			} else {
-				$data['msjError'] = "Ha ocurrido un error al modificar el usuario. Por favor, inténtelo más tarde.";
-			}
-			$data['listaUsuarios'] = $this->usuario->getAll();
-			$this->vista->mostrar("usuario/configuracion", $data);
+			$result = $this->usuario->update($idUsuario,$email,$pass,$nombre,$apellido1,$apellido2,$dni);
+		
+		if($result == 1){
+			$data['msjInfo'] = "Usuario modificado correctamente.";
+		}
+		else{
+			$data['msjError'] = "No se ha podido modificar el usuario.";
+		}
+		$data['listaUsuarios'] = $this->usuario->getAll();
+		$this->vista->mostrar("usuario/configuracion",$data);
 		
 	}
 
