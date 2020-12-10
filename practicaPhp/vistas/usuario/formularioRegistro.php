@@ -22,9 +22,9 @@ padre.removeChild(cabecera);
 					
 					
 					<div class="wrap-input100 rs2 validate-input" data-validate="Password is required">
-						<input class="input100" type="password" name="pass">
+						<input class="input100" type="password" name="password">
                         <span class="label-input100">Password</span>
-                        <input type="hidden" name="action" value="procesarLogin">
+                        
 					</div>
 
 					<div class="wrap-input100 rs1 validate-input" data-validate="Name is required">
@@ -45,7 +45,7 @@ padre.removeChild(cabecera);
 					<div class="wrap-input100 rs2 validate-input">
 						<input class="input100" type="text" name="dni">
 						<span class="label-input100">DNI</span>
-						<input type="hidden" name='action' value='insertarUsuario'>
+						<input type="hidden" name="action" value="registrarUsuario">
 					</div>
 
 					<div class="container-login100-form-btn">

@@ -19,6 +19,18 @@
          * @param descripcion La contraseña del usuario
          * @return True si existe un usuario con ese nombre y contraseña, false en caso contrario
          */
+        public function get($idHorario)
+        {
+            $result = $this->db->consulta("SELECT * FROM horarios WHERE idHorario = '$idHorario'");
+            if ($result) {
+                return $result[0];
+            } else {
+                return null;
+            }
+        }
+
+
+
         public function getAll() {
             $arrayResult = array();
             $result = $this->db->consulta("SELECT * FROM horarios");

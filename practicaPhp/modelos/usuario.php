@@ -76,8 +76,8 @@
             if ($existeEmail) {
                 $result = -1;
             }else{
-                $result = $this->db->manipulacion("INSERT INTO usuarios (nombre,pass,email,apellido1,apellido2,dni) 
-                            VALUES ('$nombre','$password', '$email', '$apellido1', '$apellido2', '$dni')");
+                $result = $this->db->manipulacion("INSERT INTO usuarios (nombre,pass,email,apellido1,apellido2,dni,tipo) 
+                            VALUES ('$nombre','$password', '$email', '$apellido1', '$apellido2', '$dni' ,'2')");
             }
              return $result;
         }
@@ -96,6 +96,8 @@
 
         }
 
+        
+
         public function update($idUsuario, $email, $pass, $nombre, $apellido1, $apellido2, $dni)
         {
             $arrayResult = array();
@@ -105,7 +107,8 @@
                                     nombre = '$nombre',
                                     apellido1 = '$apellido1',
                                     apellido2 = '$apellido2',
-                                    dni = '$dni'
+                                    dni = '$dni',
+                                    imagen = '$idUsuario'
                                     WHERE idUsuario = '$idUsuario'"))
             {
                return $result; 
@@ -113,6 +116,27 @@
                 $arrayResult = null;
             } 
                                 
+        }
+
+        public function procesarImagen() {
+            $imagenBuena = true;
+            $imagen = $_FILES['imagen']['name'];
+            $idUsuario = $_REQUEST['idUsuario'];
+            if (isset($imagen) && $imagen != "") {
+                $tipo = $_FILES['imagen']['type'];
+                $tamanyo = $_FILES['imagen']['size'];
+                $temp = $_FILES['imagen']['tmp_name'];
+                if (!((strpos($tipo, "gif") || strpos($tipo,"jpeg") || (strpos($tipo,"jpg") || strpos($tipo,"png")) && ($tamanyo < 2000000)))) {
+                    $imagenBuena = false;
+                } else {
+                    if (move_uploaded_file($temp, 'img/usuarios/'.$idUsuario.'.jpg')) {
+                        $this->db->manipulacion("UPDATE usuarios SET
+                                                                imagen='$imagen'
+                                                    WHERE idInstalacion = '$idUsuario'");
+                    }
+                }
+            }
+            return $imagenBuena;
         }
         
         public function busquedaAproximada($textoBusqueda)
@@ -129,5 +153,6 @@
                 $arrayResult = null;
             }
         }
+        
     
     }

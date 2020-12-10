@@ -22,7 +22,9 @@ echo "<header id='cabecera'>
 				<button class='botones'>Logout</button>
 					
 		</form>
-		</li>
+		";
+if($_SESSION["tipo"]==1){
+	echo "</li>
 		<li>
 		<form class='login100-form validate-form'>	 
 			<input type='hidden' name='action' value='mostrarUsuarios'>
@@ -39,7 +41,19 @@ echo "<header id='cabecera'>
 			</div>			
 		</form>
 		</li>
+		";
+}else{
+	echo "
 		<li>
+		<form class='login100-form validate-form'>	 
+			<input type='hidden' name='action' value='mostrarUsuarios'>
+			<div class='container-login100-form-btn'>
+				<a class='botones' href='index.php?action=formularioModificarUsuario&idUsuario=" . $_SESSION["idUsuario"] . "'>MI PERFIL</a>
+			</div>			
+		</form>
+		</li>";
+}
+echo "<li>
 		<form class='login100-form validate-form'>	 
 			<input type='hidden' name='action' value='mostrarListaReservas'>
 			<div class='container-login100-form-btn'>

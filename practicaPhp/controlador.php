@@ -18,10 +18,7 @@ class Controlador{
        $this->seguridad = new Seguridad();
     }
 
-	public function mostrarListaReservas(){
-        $data['listaReservas'] = $this->reserva->getAll();
-        $this->vista->mostrar("reserva/listaReservas", $data);
-    }
+
 
 
 	/**************************************************   INICIO DE SESION   ************************************************************/
@@ -54,10 +51,17 @@ class Controlador{
 	}
 	/**************************************************   RESERVAS   ***************************************************************/
 
+
+	public function mostrarListaReservas(){
+        $data['listaReservas'] = $this->reserva->getAll();
+        $this->vista->mostrar("reserva/listaReservas", $data);
+    }
+
 	public function formularioReserva(){
 		$fecha = $_REQUEST["fecha"];
 		$data['listaReservas'] = $this->reserva->getAllDia($fecha);
 		$data['listaInstalaciones'] = $this->instalacion->getAll();
+		$data['fecha'] = $_REQUEST["fecha"];
         $this->vista->mostrar("reserva/formularioReserva", $data);
 	}
 	
@@ -76,6 +80,40 @@ class Controlador{
 			$instalacion = $data['precio'];
 				echo $instalacion->precio;
 	}
+
+	public function borrarReservaAjax()
+	{
+		if ($this->seguridad->haySesionIniciada()) {
+			$idReserva = $_REQUEST["idReserva"];
+			$result = $this->reserva->delete($idReserva);
+			if ($result == 0) {
+				// Error al borrar. Enviamos el código -1 al JS
+				echo "-1";
+			}
+			else {
+				// Borrado con éxito. Enviamos el id del libro a JS
+				echo $idReserva;
+			}
+		} else {
+			echo "-1";
+		}
+	}
+
+	public function insertarReserva()
+	{
+		$result = $this->reserva->insert();
+
+		if($result == 1){
+			$data['msjInfo'] = "Nueva reserva realizada.";
+		}
+		else{
+			$data['msjError'] = "Error al realizar la reserva.";
+		}
+		$data['listaReservas'] = $this->reserva->getAll();
+        $this->vista->mostrar("reserva/listaReservas", $data);
+		
+	}
+
 	/**************************************************   USUARIOS   ***************************************************************/
 	public function mostrarUsuarios() {
 		$data['listaUsuarios'] = $this->usuario->getAll();
@@ -89,6 +127,20 @@ class Controlador{
 	public function mostrarFormularioRegistro()
 	{
 		$this->vista->mostrar("usuario/formularioRegistro");
+	}
+
+	public function registrarUsuario()
+	{
+		$result = $this->usuario->insert();
+
+		if($result == 1){
+			$data['msjInfo'] = "Cuenta creada correctamente. Por favor, inicie sesión.";
+		}
+		else{
+			$data['msjError'] = "Email en uso.";
+		}
+		$this->vista->mostrar("usuario/formularioLogin",$data);
+		
 	}
 
 	public function insertarUsuario()
@@ -123,14 +175,17 @@ class Controlador{
 			$apellido2 = $_REQUEST["apellido2"];
 			$dni = $_REQUEST["dni"];
 
+			$imgResult = $this->usuario->procesarImagen();
 			$result = $this->usuario->update($idUsuario,$email,$pass,$nombre,$apellido1,$apellido2,$dni);
-		
-		if($result == 1){
-			$data['msjInfo'] = "Usuario modificado correctamente.";
-		}
-		else{
-			$data['msjError'] = "No se ha podido modificar el usuario.";
-		}
+			if($imgResult){
+				if($result == 1){
+					$data['msjInfo'] = "Usuario modificado correctamente.";
+				}
+				else{
+					$data['msjError'] = "Ha ocurrido un error al modificar el usuario.";
+				}
+			}else $data['msjError'] = "No se ha podido modificar la foto.";
+
 		$data['listaUsuarios'] = $this->usuario->getAll();
 		$this->vista->mostrar("usuario/configuracion",$data);
 		
@@ -166,11 +221,14 @@ class Controlador{
 	}
 	/**************************************************   INSTALACIONES   ***************************************************************/
 	
+
 	public function mostrarInstalaciones() {
 		$data['listaInstalaciones'] = $this->instalacion->getAll();
+		$data['horario'] = $this->horario->getAll();
         $this->vista->mostrar("instalacion/listaInstalaciones", $data);
 	}
-	
+
+
 	public function buscarInstalaciones()
 	{
 		// Recuperamos el texto de búsqueda de la variable de formulario
@@ -179,7 +237,6 @@ class Controlador{
 		$data['listaInstalaciones'] = $this->instalacion->busquedaAproximada($textoBusqueda);
 		$data['msjInfo'] = "Resultados de la búsqueda: \"$textoBusqueda\"";
 		$this->vista->mostrar("instalacion/listaInstalaciones", $data);
-
 	}
 	
 	public function insertarInstalacion()
@@ -213,10 +270,12 @@ class Controlador{
 		}
 	}
 
+
 	public function formularioModificarInstalacion()
 	{
 			$idInstalacion = $_REQUEST["idInstalacion"];
 			$data['instalacion'] = $this->instalacion->get($idInstalacion);
+			$data['horario'] = $this->horario->getAll();
 			$this->vista->mostrar('instalacion/formularioModificarInstalacion', $data);
 	}
 	public function modificarInstalacion()
@@ -227,9 +286,10 @@ class Controlador{
 			$precio = $_REQUEST["precio"];
 			$idHorario = $_REQUEST["idHorario"];
 
+			$imgResult = $this->instalacion->procesarImagen();
 			$result = $this->instalacion->update($idInstalacion, $nombre, $descripcion, $precio, $idHorario);
 
-			if ($result == 1) {
+			if ($result == 1 && $imgResult) {
 				$data['msjInfo'] = "Instalacion actualizada con éxito";
 			} else {
 				$data['msjError'] = "Ha ocurrido un error al modificar la instalación. Por favor, inténtelo más tarde.";

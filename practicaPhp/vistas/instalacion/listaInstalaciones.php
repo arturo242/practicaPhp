@@ -1,25 +1,6 @@
 <h1>Configuración de instalaciones</h1>
 	</header>
-	<div class="text-center p-t-100">
-		
-		<div id="miModal" class="modal">
-			<div class="modal-contenido">
-				<a href="#" class="botonX">X</a>
-					<form action='index.php' class="formModal">
-						<h2>NUEVA INSTALACIÓN</h2>
-						<input type='hidden' name='action' value='insertarInstalacion' required>
-						<p>Nombre</p> <input type='text' name='nombre' class="inputModal" required>
-						<p>Descripción</p> <textarea  rows="6" cols="22" type='text' class="inputModal" name="descripcion"></textarea>
-						<p>Precio por Hora</p> <input type='number' name='precio' class="inputModal" required>
-						
-						<div class='container-login100-form-btn'>
-							<button class='botones'>Nueva</button>
-						</div>	
-						
-					</form>
-			</div>  
-		</div>
-	</div>
+	
 	<script>
 
 	// **** Petición y respuesta AJAX con jQuery ****
@@ -54,7 +35,37 @@ if (isset($data['msjInfo'])) {
 
 
 // Primero, el formulario de búsqueda
-echo "<form action='index.php' class='formB'>
+echo "<div class='text-center p-t-100'>
+		
+		<div id='miModal' class='modal'>
+			<div class='modal-contenido'>
+				<a href='#' class='botonX'>X</a>
+					<form action='index.php' class='formModal' method='POST'>
+						<h2>NUEVA INSTALACIÓN</h2>
+						<input type='hidden' name='action' value='insertarInstalacion'>
+						
+						<p>Nombre</p> <input type='text' name='nombre' class='inputModal' required>
+						<p>Descripción</p> <textarea  rows='6' cols='22' type='text' class='inputModal' name='descripcion'></textarea>
+						<p>Precio por Hora</p> <input type='number' name='precio' class='inputModal' required>
+						<p>Horario</p><select id='miSel' name='idHorario'>
+                		<option>--Selecciona un horario--</option>";
+						foreach ($data['horario'] as $horario) {
+							$horaInicio = substr(strval($horario->horaInicio),0,2);
+							$horaFin = substr(strval($horario->horaFin),0,2);
+							$horas = "De ".$horaInicio." horas a ".$horaFin." horas";
+							echo "<option value='" . $horario->idHorario .
+							"'>" . $horas . "</option>";
+						}
+						echo "</select><br>
+						<div class='container-login100-form-btn'>
+							<button class='botones'>Nueva</button>
+						</div>	
+						
+					</form>
+			</div>  
+		</div>
+		</div>
+<form action='index.php' class='formB'>
 			<input type='hidden' name='action' value='buscarInstalaciones'>
 			<div class='nuevoB'>
 			   <input type='text' name='textoBusqueda' class='busq'>
@@ -71,37 +82,33 @@ echo "<form action='index.php' class='formB'>
 
 if (is_array($data['listaInstalaciones'])) {
 
-	echo "<table border ='1' class='tablas'>";
+	echo "<div class='text-center p-t-100'>
+	<table border ='1' class='tablas'>";
 	foreach ($data['listaInstalaciones'] as $instalacion) {
 		echo "<tr id='instalacion" . $instalacion->idInstalacion . "'>";
+		if($instalacion->imagen != null){
+			echo "<td><img src='img/instalaciones/" . $instalacion->imagen . ".jpg'></img></td>";
+		}else{
+				echo"<td>Sin foto.</td>";
+		}
 		echo "<td>" . $instalacion->nombre . "</td>";
 		echo "<td>" . $instalacion->descripcion . "</td>";
 		echo "<td>" . $instalacion->precio . " €</td>";
-        echo "<td>" . $instalacion->idHorario . "</td>";
-		if(isset($instalacion->imagen)){
-		echo "<td><img class='img' src='" . $instalacion->imagen . "'></img></td>";
-		} 
-			echo"<td>
-			<form method='POST' action='index.php' enctype='multipart/form-data'>
-							<input type='file' name='fotoInstalacion'>
-							<input type='hidden' value='subirFoto'>
-							<div class='container-login100-form-btn'>
-							<button class='botones' style='width:90px;height:50px;'>Subir foto</button>
-							</div>	
-			</form>
-			</td>";
+        $horaInicio = substr(strval($instalacion->horaInicio),0,2);
+		$horaFin = substr(strval($instalacion->horaFin),0,2);
+		$horas = "De ".$horaInicio." horas a ".$horaFin." horas";
+		echo "<td value='" . $instalacion->idHorario ."'>" . $horas . "</td>";
 		
 		//echo "<td>" . $instalacion->tipo . "</td>";
 		// Los botones "Modificar" y "Borrar" solo se muestran si hay una sesión iniciada
 		if ($this->seguridad->haySesionIniciada()) {
 			echo "<td><a class='botones' href='index.php?action=formularioModificarInstalacion&idInstalacion=" . $instalacion->idInstalacion . "'>Modificar</a></td>";
-			//echo "<td><a href='index.php?action=borrarinstalacion&idInstalacion=" . $instalacion->idInstalacion . "'>Borrar mediante enlace</a></td>";
-			//echo "<td><a href='#' onclick='borrarPorAjax(" . $libro->idLibro . ")'>Borrar por Ajax/JS</a></td>";
 			echo "<td><a href='#' class='btnBorrar' id='" . $instalacion->idInstalacion . "'>Borrar</a></td>";
 		}
 		echo "</tr>";
 	}
-	echo "</table>";
+	echo "</table>
+	</div>";
 } else {
 	// La consulta no contiene registros
 	echo "No se encontraron datos";

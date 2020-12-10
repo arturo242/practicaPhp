@@ -6,7 +6,7 @@
             $_SESSION["email"] = $usuario->email;
             $_SESSION["nombre"] = $usuario->nombre;
             $_SESSION["imagen"] = $usuario->imagen;
-            //$_SESSION["tipo"] = $usuario->tipo;
+            $_SESSION["tipo"] = $usuario->tipo;
         }
 
         public function cerrarSesion() {
@@ -19,6 +19,14 @@
 
         public function haySesionIniciada() {
             if (isset($_SESSION["idUsuario"])) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        public function esAdmin(){
+            if ($_SESSION["tipo"] == 1) {
                 return true;
             } else {
                 return false;

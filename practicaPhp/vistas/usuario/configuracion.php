@@ -76,9 +76,15 @@ echo "<form action='index.php' class='formB'>
 if (is_array($data['listaUsuarios'])) {
 
 	// Ahora, la tabla con los datos de los libros
-	echo "<table border ='1' class='tablas'>";
+	echo "<div class='text-center p-t-100'>
+	<table border ='1' class='tablas'>";
 	foreach ($data['listaUsuarios'] as $usuario) {
 		echo "<tr id='usuario" . $usuario->idUsuario . "'>";
+		if($usuario->imagen != null){
+			echo "<td><img src='img/usuarios/" . $usuario->idUsuario . ".jpg'></img></td>";
+		}else{
+				echo"<td><img src='img/usuarios/default.jpg'></td>";
+		}
 		echo "<td>" . $usuario->email . "</td>";
 		echo "<td>" . $usuario->nombre . "</td>";
 		echo "<td>" . $usuario->apellido1 . "</td>";
@@ -94,7 +100,8 @@ if (is_array($data['listaUsuarios'])) {
 		}
 		echo "</tr>";
 	}
-	echo "</table>";
+	echo "</table>
+	</div>";
 } else {
 	// La consulta no contiene registros
 	echo "No se encontraron datos";

@@ -16,8 +16,8 @@
             }
 
         }
-        public function buscarImagen($img) {
-            $imagen = $this->db->consulta("SELECT idInstalacion, imagen FROM instalaciones WHERE imagen = '$img'");
+        public function buscarImagen() {
+            $imagen = $this->db->consulta("SELECT * FROM instalaciones");
             if ($imagen) {
                 return $imagen[0];
             } else {
@@ -38,7 +38,11 @@
 
         public function getAll() {
             $arrayResult = array();
-            $result = $this->db->consulta("SELECT * FROM instalaciones" );
+            $result = $this->db->consulta("SELECT * FROM instalaciones
+                                                 INNER JOIN horarios 
+                                                    ON horarios.idHorario = instalaciones.idHorario
+                                                    ORDER BY instalaciones.nombre
+            " );
             if(count($result) == 1){
                 $arrayResult[]=$result[0];
                 return $arrayResult;
@@ -75,18 +79,6 @@
                 return 0;
 
         }
-
-        public function updateImg(){
-            $ficheroSubido = "img/".$_FILES['fotoInstalacion']['name'].".jpg";
-
-            if(move_uploaded_file($_FILES['fotoInstalacion']['tmp_name'], $ficheroSubido)){
-                $imagen = $ficheroSubido;
-            }
-            else {
-                $result = -1;
-            }
-            return $result;
-        }
         public function update($idInstalacion, $nombre, $descripcion, $precio, $idHorario)
         {
             $arrayResult = array();
@@ -94,7 +86,8 @@
                                     nombre = '$nombre',
                                     descripcion = '$descripcion',
                                     precio = '$precio',
-                                    idHorario = '$idHorario'
+                                    idHorario = '$idHorario',
+                                    imagen ='$idInstalacion'
                                     WHERE idInstalacion = '$idInstalacion'"))
             {
                return $result; 
@@ -117,5 +110,26 @@
             } else {
                 $arrayResult = null;
             }
+        }
+
+        public function procesarImagen() {
+            $imagenBuena = true;
+            $imagen = $_FILES['imagen']['name'];
+            $idInstalacion = $_REQUEST['idInstalacion'];
+            if (isset($imagen) && $imagen != "") {
+                $tipo = $_FILES['imagen']['type'];
+                $tamanyo = $_FILES['imagen']['size'];
+                $temp = $_FILES['imagen']['tmp_name'];
+                if (!((strpos($tipo, "gif") || strpos($tipo,"jpeg") || (strpos($tipo,"jpg") || strpos($tipo,"png")) && ($tamanyo < 2000000)))) {
+                    $imagenBuena = false;
+                } else {
+                    if (move_uploaded_file($temp, 'img/instalaciones/'.$idInstalacion.'.jpg')) {
+                        $this->db->manipulacion("UPDATE instalaciones SET
+                                                                imagen='$imagen'
+                                                    WHERE idInstalacion = '$idInstalacion'");
+                    }
+                }
+            }
+            return $imagenBuena;
         }
     }

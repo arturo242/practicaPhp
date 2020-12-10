@@ -1,6 +1,6 @@
 <?php
     /*
-        Polideportivo Versión 1.
+        Polideportivo Versión FINAL.
 
 
     */
